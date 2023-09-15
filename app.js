@@ -3,6 +3,8 @@ const logger = require("morgan");
 const cors = require("cors");
 const app = express();
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 // Іменований імпорт роутів 
 const {
@@ -17,6 +19,10 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
+// __________________________________
+// Документація
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 // __________________________________
 
 
