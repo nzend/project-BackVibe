@@ -2,8 +2,8 @@
     "openapi": "3.0.1",
     "info": {
       "version": "2.0.2",
-      "title": "Swagger Task Pro",
-      "description": "Showing off Task Pro work",
+      "title": "Swagger Power Pulse",
+      "description": "Showing off Power Pulse work",
       "license": {
         "name": "MIT",
         "url": "https://opensource.org/licenses/MIT"
@@ -212,54 +212,30 @@
           }
         }
       },
-      "/api/users/update": {
-        "put": {
+      "/api/users/create": {
+        "post": {
           "tags": ["Users"],
-          "summary": "User updating",
+          "summary": "User data create",
           "parameters": [],
           "security": [{ "Bearer": [] }],
           "requestBody": {
-            "description": "Update user's object (multipart/form-data)",
+            "description": "Create user's object-data (multipart/form-data)",
             "required": true,
             "content": {
               "multipart/form-data": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "avatar": {
-                      "type": "file",
-                      "format": "binary",
-                      "description": "User's avatar",
-                      "example": "avatar.jpg"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "User's name",
-                      "example": "Mango"
-                    },
-                    "email": {
-                      "type": "string",
-                      "format": "email",
-                      "description": "User's email",
-                      "example": "mango@email.com"
-                    },
-                    "password": {
-                      "type": "string",
-                      "description": "User's password",
-                      "example": "Mango12378"
-                    }
-                  }
+                  "$ref": "#/components/schemas/CreateUserDataRequest"
                 }
               }
             }
           },
           "responses": {
             "200": {
-              "description": "Successful operation, user updated",
+              "description": "Successful operation, user  data created",
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/UpdateUserResponse"
+                    "$ref": "#/components/schemas/successfulCreateResponse"
                   }
                 }
               }
@@ -276,6 +252,77 @@
             },
             "401": {
               "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/users/update": {
+        "put": {
+          "tags": ["Users"],
+          "summary": "User data create",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "requestBody": {
+            "description": "Create user's object-data (multipart/form-data)",
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDataResponse"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful operation, user  data updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/successfulUpdateResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBadRequestResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized ",
               "content": {
                 "application/json": {
                   "schema": {
@@ -401,7 +448,7 @@
           }
         },
         "post": {
-          "tags": ["Boards"],
+          "tags": ["Diary"],
           "summary": "Add new board",
           "parameters": [],
           "security": [{ "Bearer": [] }],
@@ -469,788 +516,7 @@
             }
           }
         }
-      },
-      "/api/boards/{id}": {
-        "get": {
-          "tags": ["Boards"],
-          "summary": "Get board by id",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "example": "64d360ea78fe376e4981199f",
-              "schema": {
-                "minimum": 1
-              }
-            }
-          ],
-          "security": [{ "Bearer": [] }],
-          "responses": {
-            "200": {
-              "description": "Successful operation, board by id get",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/GetBoardByIdResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundBoardResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "put": {
-          "tags": ["Boards"],
-          "summary": "Update board",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "example": "64d360ea78fe376e4981199f",
-              "schema": {
-                "minimum": 1
-              }
-            }
-          ],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "Board's object",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UpdateBoardRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Successful operation, board updated",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/UpdateBoardResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorBadRequestResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundBoardResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "delete": {
-          "tags": ["Boards"],
-          "summary": "Delete board",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "example": "64d360ea78fe376e4981569f",
-              "schema": {
-                "minimum": 1
-              }
-            }
-          ],
-          "security": [{ "Bearer": [] }],
-          "responses": {
-            "200": {
-              "description": "Successful operation, board is deleted",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/DeleteBoardResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundBoardResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-  
-      "/api/columns": {
-        "post": {
-          "tags": ["Columns"],
-          "summary": "Add new column",
-          "parameters": [],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "Column's object",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AddColumnRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "Successful operation, new column added",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AddColumnResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorBadRequestResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/columns/{id}": {
-        "put": {
-          "tags": ["Columns"],
-          "summary": "Update column",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "example": "64d360ea78fe376e4981199f",
-              "schema": {
-                "minimum": 1
-              }
-            }
-          ],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "Column's object",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UpdateColumnRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Successful operation, column updated",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/UpdateColumnResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorBadRequestResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundColumnResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "delete": {
-          "tags": ["Columns"],
-          "summary": "Delete column",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "example": "64d360ea78fe376e4981569f",
-              "schema": {
-                "minimum": 1
-              }
-            }
-          ],
-          "security": [{ "Bearer": [] }],
-          "responses": {
-            "200": {
-              "description": "Successful operation, column is deleted",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/DeleteColumnResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundColumnResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/columns/{id}/transfer": {
-        "patch": {
-          "tags": ["Columns"],
-          "summary": "Transfer column",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "example": "64d360ea78fe376e4981199f",
-              "schema": {
-                "minimum": 1
-              }
-            }
-          ],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "Column's object",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TransferColumnRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Successful operation, column is transferred",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/TransferColumnResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorBadRequestResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundColumnResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-  
-      "/api/tasks": {
-        "post": {
-          "tags": ["Tasks"],
-          "summary": "Add new task",
-          "parameters": [],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "Task's object",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AddTaskRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "Successful operation, new task added",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AddTaskResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorBadRequestResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/tasks/{id}": {
-        "put": {
-          "tags": ["Tasks"],
-          "summary": "Update task",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "example": "64d360ea78fe376e4981199f",
-              "schema": {
-                "minimum": 1
-              }
-            }
-          ],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "Task's object",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UpdateTaskRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Successful operation, Task updated",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/UpdateTaskResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorBadRequestResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundTaskResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "delete": {
-          "tags": ["Tasks"],
-          "summary": "Delete task",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "example": "64d360ea78fe376e4981569f",
-              "schema": {
-                "minimum": 1
-              }
-            }
-          ],
-          "security": [{ "Bearer": [] }],
-          "responses": {
-            "200": {
-              "description": "Successful operation, column is deleted",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/DeleteColumnResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundTaskResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/tasks/{id}/transfer": {
-        "patch": {
-          "tags": ["Tasks"],
-          "summary": "Transfer task",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "required": true,
-              "example": "64d360ea78fe376e4981199f",
-              "schema": {
-                "minimum": 1
-              }
-            }
-          ],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "Task's object",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TransferTaskRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Successful operation, column is transferred",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/TransferTaskResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorBadRequestResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundTaskResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+      } 
     },
   
     "components": {
@@ -1418,34 +684,57 @@
             }
           }
         },
-  
-        "UpdateUserRequest": {
+        "CreateUserDataRequest": {
           "type": "object",
+          "required": ["name", "height", "currentWeight", "desiredWeight", "birthday", "blood", "sex", "levelActivity"],
           "properties": {
             "name": {
               "type": "string",
               "description": "User's name. It must contain only Latin letters; may contain numbers, signs, letters in different case",
               "example": "Mango"
             },
-            "email": {
-              "type": "string",
-              "description": "User's email. It must contain only Latin letters; may include numbers, letters in different case",
-              "format": "email",
-              "example": "mango@email.com"
+            "height": {
+              "type": "number",
+              "description": "User's height",
+              "example": 184
             },
-            "password": {
-              "type": "string",
-              "description": "User's password. It must contain only Latin letters; may contain numbers, signs, letters in different case; does not contain a space",
-              "example": "Mango12378"
+            "currentWeight": {
+              "type": "number",
+              "description": "User's current weight. Can't be more than 400.",
+              "example": 100
             },
-            "avatarURL": {
+            "desiredWeight": {
+              "type": "number",
+              "description": "User's desired weight. Can't be less than 50% of current weight.",
+              "example": 80
+            },
+            "birthday": {
               "type": "string",
-              "description": "User's avatar",
-              "example": ""
+              "description": "User's birthday. Format dd-mm-YYYY",
+              "example": "08-09-1999"
+            },
+            "blood": {
+              "type": "number",
+              "description": "User's blood",
+              "enum": [1, 2, 3, 4],
+              "example": 1
+            },
+            "sex": {
+              "type": "string",
+              "description": "User's sex",
+              "enum": ["male", "female"],
+              "example": "male"
+            },
+            "levelActivity:": {
+              "type": "number",
+              "description": "User's desired level activity. 1 - easy, 5 - hard",
+              "enum": [1, 2, 3, 4, 5],
+              "example": "1"
             }
+          
           }
         },
-        "UpdateUserResponse": {
+        "CreateUserDataResponse": {
           "type": "object",
           "properties": {
             "name": {
@@ -1453,23 +742,159 @@
               "description": "User's name. It must contain only Latin letters; may contain numbers, signs, letters in different case",
               "example": "Mango"
             },
-            "email": {
+            "avatarURL": {
               "type": "string",
-              "description": "User's email",
-              "format": "email",
-              "example": "mango@email.com"
+              "description": "User's avatar",
+              "example": ""
             },
-            "theme": {
+            "height": {
+              "type": "number",
+              "description": "User's height",
+              "example": 184
+            },
+            "currentWeight": {
+              "type": "number",
+              "description": "User's current weight. Can't be more than 400.",
+              "example": 100
+            },
+            "desiredWeight": {
+              "type": "number",
+              "description": "User's desired weight. Can't be less than 50% of current weight.",
+              "example": 80
+            },
+            "birthday": {
               "type": "string",
-              "description": "User's theme",
-              "enum": ["dark", "violet", "light"],
-              "example": "dark"
+              "description": "User's birthday. Format dd-mm-YYYY",
+              "example": "08-09-1999"
+            },
+            "blood": {
+              "type": "number",
+              "description": "User's blood",
+              "enum": [1, 2, 3, 4],
+              "example": 1
+            },
+            "sex": {
+              "type": "string",
+              "description": "User's sex",
+              "enum": ["male", "female"],
+              "example": "male"
+            },
+            "levelActivity:": {
+              "type": "number",
+              "description": "User's desired level activity. 1 - easy, 5 - hard",
+              "enum": [1, 2, 3, 4, 5],
+              "example": "1"
+            }
+          
+          }
+        },
+  
+        "UpdateUserDataRequest": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "User's name. It must contain only Latin letters; may contain numbers, signs, letters in different case",
+              "example": "Mango"
             },
             "avatarURL": {
               "type": "string",
               "description": "User's avatar",
               "example": ""
+            },
+            "height": {
+              "type": "number",
+              "description": "User's height",
+              "example": 184
+            },
+            "currentWeight": {
+              "type": "number",
+              "description": "User's current weight. Can't be more than 400.",
+              "example": 100
+            },
+            "desiredWeight": {
+              "type": "number",
+              "description": "User's desired weight. Can't be less than 50% of current weight.",
+              "example": 80
+            },
+            "birthday": {
+              "type": "string",
+              "description": "User's birthday. Format dd-mm-YYYY",
+              "example": "08-09-1999"
+            },
+            "blood": {
+              "type": "number",
+              "description": "User's blood",
+              "enum": [1, 2, 3, 4],
+              "example": 1
+            },
+            "sex": {
+              "type": "string",
+              "description": "User's sex",
+              "enum": ["male", "female"],
+              "example": "male"
+            },
+            "levelActivity:": {
+              "type": "number",
+              "description": "User's desired level activity. 1 - easy, 5 - hard",
+              "enum": [1, 2, 3, 4, 5],
+              "example": "1"
             }
+          
+          }
+        },
+        "UpdateUserDataResponse": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "User's name. It must contain only Latin letters; may contain numbers, signs, letters in different case",
+              "example": "Mango"
+            },
+            "avatarURL": {
+              "type": "string",
+              "description": "User's avatar",
+              "example": ""
+            },
+            "height": {
+              "type": "number",
+              "description": "User's height",
+              "example": 184
+            },
+            "currentWeight": {
+              "type": "number",
+              "description": "User's current weight. Can't be more than 400.",
+              "example": 100
+            },
+            "desiredWeight": {
+              "type": "number",
+              "description": "User's desired weight. Can't be less than 50% of current weight.",
+              "example": 80
+            },
+            "birthday": {
+              "type": "string",
+              "description": "User's birthday. Format dd-mm-YYYY",
+              "example": "08-09-1999"
+            },
+            "blood": {
+              "type": "number",
+              "description": "User's blood",
+              "enum": [1, 2, 3, 4],
+              "example": 1
+            },
+            "sex": {
+              "type": "string",
+              "description": "User's sex",
+              "enum": ["male", "female"],
+              "example": "male"
+            },
+            "levelActivity:": {
+              "type": "number",
+              "description": "User's desired level activity. 1 - easy, 5 - hard",
+              "enum": [1, 2, 3, 4, 5],
+              "example": "1"
+            }
+          
           }
         },
   
@@ -2505,7 +1930,28 @@
             }
           }
         },
-  
+
+        "successfulCreateResponse": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "description": "Success message",
+              "example": "User data was created successful"
+            }
+          }
+        },
+        "successfulUpdateResponse": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "description": "Success message",
+              "example": "User data was updated successful"
+            }
+          }
+        },
+        
         "errorBadRequestResponse": {
           "type": "object",
           "properties": {
