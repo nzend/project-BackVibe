@@ -18,16 +18,16 @@
         "description": "Users endpoints"
       },
       {
-        "name": "Boards",
-        "description": "Boards endpoints"
+        "name": "Diary",
+        "description": "Diary endpoints"
       },
       {
-        "name": "Columns",
-        "description": "Columns endpoints"
+        "name": "Products",
+        "description": "Products endpoints"
       },
       {
-        "name": "Tasks",
-        "description": "Tasks endpoints"
+        "name": "Exercises",
+        "description": "Exercises endpoints"
       }
     ],
   
@@ -145,78 +145,6 @@
                 "application/json": {
                   "schema": {
                     "$ref": "#/components/schemas/errorNotFoundResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/users/google": {
-        "get": {
-          "tags": ["Users"],
-          "summary": "User login with google",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "Google form of sign in",
-              "content": {
-                "text/html": {
-                  "schema": {
-                    "type": "string",
-                    "example": "<!DOCTYPE html> <html> <head> ... </head> <body> <form action='/login' method='post'> ... </form> </body> </html>"
-                  }
-                },
-                "image/png": {
-                  "example": "./images/google-form.png"
-                }
-              }
-            },
-  
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          },
-          "description": "Below is an example of the Google form:",
-          "externalDocs": {
-            "description": "Google Form Screenshot",
-            "url": "https://res.cloudinary.com/dtmvdgvnh/image/upload/v1692039176/task-pro/back-end/google-form_j8qbq2.png"
-          }
-        }
-      },
-      "/api/users/google-redirect": {
-        "get": {
-          "tags": ["Users"],
-          "summary": "Google redirect",
-          "parameters": [],
-          "security": [{ "Bearer": [] }],
-          "responses": {
-            "302": {
-              "description": " Redirect to user's page"
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
                   }
                 }
               }
@@ -379,148 +307,6 @@
           }
         }
       },
-      "/api/users/theme": {
-        "patch": {
-          "tags": ["Users"],
-          "summary": "User theme",
-          "parameters": [],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "User theme updating",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UpdateThemeRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Successful operation, theme updated",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/UpdateThemeResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorBadRequestResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/api/users/help": {
-        "post": {
-          "tags": ["Users"],
-          "summary": "User help",
-          "parameters": [],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "Help's object",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HelpRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Help successful",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/HelpResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorBadRequestResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "/api/users/logout": {
         "post": {
           "tags": ["Users"],
@@ -565,10 +351,10 @@
         }
       },
   
-      "/api/boards": {
+      "/api/diary": {
         "get": {
-          "tags": ["Boards"],
-          "summary": "Get boards list",
+          "tags": ["Diary"],
+          "summary": "Get Diary list",
           "parameters": [],
           "security": [{ "Bearer": [] }],
           "responses": {
