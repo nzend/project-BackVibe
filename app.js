@@ -13,13 +13,14 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
 // __________________________________
 
 // Місце для роутів
-app.use('/api/auth', authRouter);
+
 app.use('/api/exercises', exercisesRouter);
 app.use('/api/filter', filterRouter);
+app.use("/api/users", authRouter);
 
 // _____________________________________________
 
