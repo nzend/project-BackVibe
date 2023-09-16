@@ -755,7 +755,7 @@
                   "description": "User's avatar",
                   "example": ""
                 },
-                "dailyCalories": {
+                "dailyСalories": {
                   "type": "number",
                   "description": "User's dailyCalories",
                   "example": 2200
@@ -808,6 +808,7 @@
                     }      
                   }
                 }
+                
                         
               }
             }
