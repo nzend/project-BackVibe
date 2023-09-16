@@ -516,7 +516,127 @@
             }
           }
         }
-      } 
+      },
+      "/api/products": {
+        "get": {
+          "tags": ["Products"],
+          "summary": "Get Products list",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful operation, products list is got",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GetAllProductsResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Diary"],
+          "summary": "Add new board",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "requestBody": {
+            "description": "Board's object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddBoardRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Successful operation, new board added",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AddBoardResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBadRequestResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    
     },
   
     "components": {
@@ -949,96 +1069,61 @@
           }
         },
   
-        "GetAllBoardsResponse": {
+        "GetAllProductsResponse": {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
               "_id": {
                 "type": "string",
-                "description": "Board id",
+                "description": "Product id",
                 "example": "64d360ea78fe376e4981199f"
               },
               "title": {
                 "type": "string",
-                "description": "Board's title",
-                "example": "First Board"
+                "description": "Product's title",
+                "example": "Danbo cheese"
               },
-              "icon": {
-                "type": "string",
-                "description": "Board's icon",
+              "weight": {
+                "type": "number",
+                "description": "Static product weight examle",
                 "enum": [
-                  "icon-colors",
-                  "icon-container",
-                  "icon-hexagon",
-                  "icon-lightning",
-                  "icon-loading",
-                  "icon-project",
-                  "icon-star",
-                  "icon-puzzle-piece"
+                  100
                 ],
-                "example": "icon-hexagon"
+                "example": "100"
               },
-              "background": {
+              "calories": {
+                "type": "number",
+                "description": "Product calories/100g",
+                "example": 357
+              },
+              "category": {
                 "type": "string",
-                "description": "Board's background",
-                "enum": [
-                  "airBalloon",
-                  "blue",
-                  "cappadocia",
-                  "flowers",
-                  "gorge",
-                  "greens",
-                  "moon",
-                  "mountains",
-                  "rocksAndSea",
-                  "sea",
-                  "semiMoon",
-                  "trailer",
-                  "tree",
-                  "yacht",
-                  "violetSphere",
-                  "default"
-                ],
-                "example": "greens"
+                "description": "Product`s category",
+                "example": "cereals"
               },
-              "columnOrder": {
-                "type": "array",
-                "description": "Column order",
-                "example": [
-                  "64d5585cf10982f0832226f4",
-                  "64d5585cf10982f0832226f4"
-                ]
-              },
-              "owner": {
+              "groupBloodNotAllowed": {
                 "type": "object",
                 "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "User's name",
-                    "example": "Mango"
+                  "1": {
+                    "type": "boolean",
+                    "description": "User's blood",
+                    "example": true
                   },
-                  "email": {
-                    "type": "string",
-                    "description": "User's email",
-                    "format": "email",
-                    "example": "mango@email.com"
+                  "2": {
+                    "type": "boolean",
+                    "description": "User's blood",
+                    "example": true
                   },
-  
-                  "avatarURL": {
-                    "type": "string",
-                    "description": "User's avatar",
-                    "example": ""
+                  "3": {
+                    "type": "boolean",
+                    "description": "User's blood",
+                    "example": true
                   },
-                  "createdAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2023-08-09T18:30:47.840Z"
-                  },
-                  "updatedAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2023-08-09T18:31:22.235Z"
+                  "4": {
+                    "type": "boolean",
+                    "description": "User's blood",
+                    "example": true
                   }
                 }
               },
