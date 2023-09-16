@@ -521,7 +521,32 @@
         "get": {
           "tags": ["Products"],
           "summary": "Get Products list",
-          "parameters": [],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "blood",            
+              "example": "1",
+              "schema": {
+                "minimum": 1
+              }
+            },
+            {
+              "in": "path",
+              "name": "category",            
+              "example": "fish",
+              "schema": {
+                "minimum": 1
+              }
+            },
+            {
+              "in": "path",
+              "name": "keyword",            
+              "example": "marlin",
+              "schema": {
+                "minimum": 1
+              }
+            }
+          ],
           "security": [{ "Bearer": [] }],
           "responses": {
             "200": {
