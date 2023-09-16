@@ -691,42 +691,10 @@
         "RegistrationResponse": {
           "type": "object",
           "properties": {
-            "_id": {
-              "type": "string",
-              "description": "User's id",
-              "example": "3214d232436cf45474"
-            },
-            "name": {
-              "type": "string",
-              "description": "User's name",
-              "example": "Mango"
-            },
-            "email": {
-              "type": "string",
-              "description": "User's email",
-              "format": "email",
-              "example": "mango@email.com"
-            },
-            "password": {
-              "type": "string",
-              "description": "User's password",
-              "example": "$2b$10$fNwXWuOdimNwjq1RdYCgUuCQfBvOGxxOqYqVta.A81EFBdBxOxk.m"
-            },
-            "theme": {
-              "type": "string",
-              "description": "User's theme",
-              "enum": ["dark", "violet", "light"],
-              "example": "dark"
-            },
-            "avatarURL": {
-              "type": "string",
-              "description": "User's avatar",
-              "example": ""
-            },
-            "accessToken": {
+            "token": {
               "type": "string",
               "description": "User's token",
-              "example": null
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDU3YWUxNjQ1OTIxYTA2MDFhYmY2YyIsImlhdCI6MTY5NDg1Nzk1MywiZXhwIjoxNjk0OTQwNzUzfQ.seYxxZquM5Sw6P1gKXGgKog2oWPh5mJClN0c1Bf2x38"
             },
             "createdAt": {
               "type": "string",
