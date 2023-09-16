@@ -6,10 +6,6 @@ const app = express();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
-// Іменований імпорт роутів 
-const {
-  authRouter,
-} = require("./routes/api");
 // Іменований імпорт роутів
 const { authRouter } = require("./routes/api");
 // ___________________________________

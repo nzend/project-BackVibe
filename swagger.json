@@ -818,32 +818,86 @@
         "CurrentUserResponse": {
           "type": "object",
           "properties": {
-            "_id": {
+            "token": {
               "type": "string",
-              "description": "User's id",
-              "example": "321b432324dc36545474"
+              "description": "User's token",
+              "format": "Bearer Token",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjMzdlMTQ5MzBjMTVhMTg1ZGQyMCIsImlhdCI6MTY5MTY2NTM1MSwiZXhwIjoxNjkxNjY3MTUxfQ.6Vv03mAwPPixXqJkc0DfsYWwEY53EGJKGOUq2HZrQ9o"
             },
-            "name": {
-              "type": "string",
-              "description": "User's name",
-              "example": "Mango"
-            },
-            "email": {
-              "type": "string",
-              "description": "User's email",
-              "format": "email",
-              "example": "mango@email.com"
-            },
-            "theme": {
-              "type": "string",
-              "description": "User's theme",
-              "enum": ["dark", "violet", "light"],
-              "example": "dark"
-            },
-            "avatarURL": {
-              "type": "string",
-              "description": "User's avatar",
-              "example": ""
+            "user": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "User's name",
+                  "example": "Mango"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "User's email",
+                  "format": "email",
+                  "example": "mango@email.com"
+                },
+               
+                "avatarURL": {
+                  "type": "string",
+                  "description": "User's avatar",
+                  "example": ""
+                },
+                "dailyСalories": {
+                  "type": "number",
+                  "description": "User's dailyCalories",
+                  "example": 2200
+                },
+                "dailyTime": {
+                  "type": "number",
+                  "description": "User's daily sport time",
+                  "example": 110
+                },
+                "bodyParameters": {
+                  "type": "object", 
+                  "properties": {
+                    "height": {
+                      "type": "number",
+                      "description": "User's height",
+                      "example": 184
+                    },
+                    "currentWeight": {
+                      "type": "number",
+                      "description": "User's current weight. Can't be more than 400.",
+                      "example": 100
+                    },
+                    "desiredWeight": {
+                      "type": "number",
+                      "description": "User's desired weight. Can't be less than 50% of current weight.",
+                      "example": 80
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "description": "User's birthday. Format dd-mm-YYYY",
+                      "example": "08-09-1999"
+                    },
+                    "blood": {
+                      "type": "number",
+                      "description": "User's blood",
+                      "enum": [1, 2, 3, 4],
+                      "example": 1
+                    },
+                    "sex": {
+                      "type": "string",
+                      "description": "User's sex",
+                      "enum": ["male", "female"],
+                      "example": "male"
+                    },
+                    "levelActivity:": {
+                      "type": "number",
+                      "description": "User's desired level activity. 1 - easy, 5 - hard",
+                      "enum": [1, 2, 3, 4, 5],
+                      "example": "1"
+                    }      
+                  }
+                }          
+              }
             }
           }
         },
