@@ -749,17 +749,12 @@
                   "format": "email",
                   "example": "mango@email.com"
                 },
-                "theme": {
+                "token": {
                   "type": "string",
-                  "description": "User's theme",
-                  "enum": ["dark", "violet", "light"],
-                  "example": "dark"
-                },
-                "avatarURL": {
-                  "type": "string",
-                  "description": "User's avatar",
-                  "example": ""
+                  "description": "User's token",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDU3YWUxNjQ1OTIxYTA2MDFhYmY2YyIsImlhdCI6MTY5NDg1Nzk1MywiZXhwIjoxNjk0OTQwNzUzfQ.seYxxZquM5Sw6P1gKXGgKog2oWPh5mJClN0c1Bf2x38"
                 }
+                
               }
             }
           }
