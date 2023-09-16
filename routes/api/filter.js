@@ -5,9 +5,9 @@ const { authenticate } = require('../../middlewares');
 
 // router.get('/:type', authenticate, ctrlFilter.getByFilters);
 
-router.get('/', authenticate, ctrlFilter.getMuscles);
+router.get('/', authenticate, ctrlFilter.getFilters);
 
-router.get('/muscles', authenticate, ctrlFilter.getMuscles);
+router.get('/muscles', authenticate, ctrlFilter.getFilters);
 
 router.get('/equipment', authenticate, ctrlFilter.getEquipment);
 
