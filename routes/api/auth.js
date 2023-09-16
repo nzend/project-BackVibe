@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const { ctrlAuth } = require("../../controllers");
-const { authenticate, validateBody } = require("../../middlewares");
+const { authenticate, validateBody, upload } = require("../../middlewares");
 const {
   registerSchema,
   loginSchema,
   userBodySchema,
+  updateSchema,
 } = require("../../schemas/authSchema");
 
 router.post("/register", validateBody(registerSchema), ctrlAuth.register);
@@ -19,7 +20,13 @@ router.post(
   ctrlAuth.userBody
 );
 
-router.patch("/update", ctrlAuth.update);
+router.patch(
+  "/update",
+  authenticate,
+  upload.single("avatar"),
+  validateBody(updateSchema),
+  ctrlAuth.update
+);
 
 router.get("/current", authenticate, ctrlAuth.currentUser);
 
