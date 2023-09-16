@@ -21,9 +21,6 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Set password for user"],
     },
-    avatarURL: {
-      type: String,
-    },
     bodyParameters: {
       height: {
         type: Number,
@@ -59,9 +56,10 @@ const userSchema = new Schema(
           message: "Level activity should be in the range 1-5",
         },
       },
-      dailyСalories: { type: Number },
-      dailyTime: { type: Number },
     },
+    dailyСalories: { type: Number },
+    dailyTime: { type: Number },
+    avatarURL: { type: String, default: null },
     token: {
       type: String,
       default: "",

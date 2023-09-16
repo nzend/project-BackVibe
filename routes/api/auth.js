@@ -5,19 +5,24 @@ const { authenticate, validateBody } = require("../../middlewares");
 const {
   registerSchema,
   loginSchema,
-  updateSchema,
+  userBodySchema,
 } = require("../../schemas/authSchema");
 
 router.post("/register", validateBody(registerSchema), ctrlAuth.register);
 
 router.post("/login", validateBody(loginSchema), ctrlAuth.login);
 
-router.patch("/update", validateBody(updateSchema), ctrlAuth.update);
+router.post(
+  "/create",
+  authenticate,
+  validateBody(userBodySchema),
+  ctrlAuth.userBody
+);
 
-//router.get("/calories", ctrlAuth.login);
+router.patch("/update", ctrlAuth.update);
 
-//router.get("/current", authenticate, ctrlAuth.currentUser);
+router.get("/current", authenticate, ctrlAuth.currentUser);
 
-//router.post("/logout", authenticate, ctrlAuth.logout);
+router.post("/logout", authenticate, ctrlAuth.logout);
 
 module.exports = router;

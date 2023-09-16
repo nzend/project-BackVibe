@@ -37,7 +37,7 @@ const loginSchema = Joi.object({
   }),
 });
 
-const dailyСaloricSchema = Joi.object({
+const userBodySchema = Joi.object({
   height: Joi.number().integer().min(150).required().messages({
     "number.base": "Height must be a number",
     "number.integer": "Height must be an integer",
@@ -127,6 +127,6 @@ const updateSchema = Joi.object({
 module.exports = {
   registerSchema,
   loginSchema,
-  dailyСaloricSchema,
+  userBodySchema,
   updateSchema,
 };
