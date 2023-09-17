@@ -1,6 +1,7 @@
-const ctrlAuth = require("./auth");
-
+const ctrlAuth = require('./auth');
+const ctrlDairy = require('./dairy');
 
 module.exports = {
-    ctrlAuth,
-  };
+  ctrlAuth,
+  ctrlDairy,
+};

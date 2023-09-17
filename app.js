@@ -4,7 +4,7 @@ const cors = require("cors");
 const app = express();
 
 // Іменований імпорт роутів
-const { authRouter } = require("./routes/api");
+const { authRouter, dairyRouter } = require('./routes/api');
 // ___________________________________
 
 // Тут нічого не чіпаємо!!!!
@@ -18,6 +18,7 @@ app.use(express.static("public"));
 
 // Місце для роутів
 app.use("/api/users", authRouter);
+app.use('/api/dairy', dairyRouter);
 
 // _____________________________________________
 
