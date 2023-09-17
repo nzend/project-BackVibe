@@ -4,19 +4,31 @@ const { Product } = require("../../models");
 
 const getAllProducts = async (req, res) => {
   console.log("REQ", req.query);
-  const { page = 1, limit = 10, blood, category, title } = req.query;
+  const { page = 1, limit = 10, recommended,  category, title } = req.query;
+
+  const {blood} = req.user.bodyParameters
+
+  console.log("RECOMMENDED", recommended);
+
+  console.log(blood);
   const skip = (page - 1) * limit;
 
  
-  const validBloodValues = ["1", "2", "3", "4"];
+  const validBloodValues = [1, 2, 3, 4];
   const isBloodValid = validBloodValues.includes(blood);
+  console.log("ISBLOODVALID", isBloodValid);
 
   const filter = {};
 
-  if (isBloodValid) {
+  if (recommended === "true") {
   
     const bloodField = `groupBloodNotAllowed.${blood}`;
     filter[bloodField] = true;
+  }
+  
+  if(recommended === "false") {
+    const bloodField = `groupBloodNotAllowed.${blood}`;
+    filter[bloodField] = false;
   }
 
   if (category) {
@@ -39,3 +51,7 @@ const getAllProducts = async (req, res) => {
 };
 
 module.exports = getAllProducts;
+
+
+
+
