@@ -524,8 +524,8 @@
           "parameters": [
             {
               "in": "path",
-              "name": "blood",            
-              "example": "1",
+              "name": "recommended",            
+              "example": true,
               "schema": {
                 "minimum": 1
               }
@@ -534,6 +534,151 @@
               "in": "path",
               "name": "category",            
               "example": "fish",
+              "schema": {
+                "minimum": 1
+              }
+            },
+            {
+              "in": "path",
+              "name": "title",            
+              "example": "marlin",
+              "schema": {
+                "minimum": 1
+              }
+            }
+          ],
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful operation, products list is got",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GetAllProductsResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Diary"],
+          "summary": "Add new board",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "requestBody": {
+            "description": "Board's object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddBoardRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Successful operation, new board added",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AddBoardResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBadRequestResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/exercises": {
+        "get": {
+          "tags": ["Exercises"],
+          "summary": "Get Exercises list",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "filter",
+              "enum": ["Body parts", "Equipment", "Muscles"],            
+              "example": "Body parts",
+              "schema": {
+                "minimum": 1
+              }
+            },
+            {
+              "in": "path",
+              "name": "equipment",            
+              "example": "body weight",
               "schema": {
                 "minimum": 1
               }
@@ -1114,58 +1259,7 @@
           
           }
         },
-  
-        "UpdateThemeRequest": {
-          "type": "object",
-          "required": ["theme"],
-          "properties": {
-            "theme": {
-              "type": "string",
-              "description": "User's theme. Theme field must be one of the next value - light, dark or violet",
-              "enum": ["dark", "light", "violet"],
-              "example": "violet"
-            }
-          }
-        },
-        "UpdateThemeResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "User's theme",
-              "example": "Theme changed"
-            }
-          }
-        },
-  
-        "HelpRequest": {
-          "type": "object",
-          "required": ["email", "comment"],
-          "properties": {
-            "email": {
-              "type": "string",
-              "description": "User's email.  It must contain only Latin letters; may include numbers, letters in different case",
-              "format": "email",
-              "example": "mango@email.com"
-            },
-            "comment": {
-              "type": "string",
-              "description": "User's comment. It must contain minimum 10 characters and maximum 256",
-              "example": "Hi! I need your help with some question..."
-            }
-          }
-        },
-        "HelpResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "User's comment",
-              "example": "Your comment has been sent"
-            }
-          }
-        },
-  
+    
         "GetAllProductsResponse": {
           "type": "array",
           "items": {
@@ -1220,7 +1314,7 @@
                   "4": {
                     "type": "boolean",
                     "description": "User's blood",
-                    "example": true
+                    "example": false
                   }
                 }
               },
@@ -1389,684 +1483,6 @@
           }
         },
   
-        "AddBoardRequest": {
-          "type": "object",
-          "properties": {
-            "title": {
-              "type": "string",
-              "description": "Board's title",
-              "example": "First Board"
-            },
-            "icon": {
-              "type": "string",
-              "description": "Board's icon",
-              "enum": [
-                "icon-colors",
-                "icon-container",
-                "icon-hexagon",
-                "icon-lightning",
-                "icon-loading",
-                "icon-project",
-                "icon-star",
-                "icon-puzzle-piece"
-              ],
-              "example": "icon-hexagon"
-            },
-            "background": {
-              "type": "string",
-              "description": "Board's background",
-              "enum": [
-                "airBalloon",
-                "blue",
-                "cappadocia",
-                "flowers",
-                "gorge",
-                "greens",
-                "moon",
-                "mountains",
-                "rocksAndSea",
-                "sea",
-                "semiMoon",
-                "trailer",
-                "tree",
-                "yacht",
-                "violetSphere",
-                "default"
-              ],
-              "example": "greens"
-            }
-          },
-          "required": ["title"]
-        },
-        "AddBoardResponse": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "description": "Board id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "title": {
-              "type": "string",
-              "description": "Board's title",
-              "example": "First Board"
-            },
-            "icon": {
-              "type": "string",
-              "description": "Board's icon",
-              "example": "icon-hexagon"
-            },
-            "background": {
-              "type": "string",
-              "description": "Board's background",
-              "example": "sea"
-            },
-            "columnOrder": {
-              "type": "array",
-              "description": "Column order",
-              "example": []
-            },
-            "owner": {
-              "type": "string",
-              "description": "Owner`s id",
-              "example": "64d11ad3b31bb700519dad42"
-            },
-            "createdAt": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:30:47.840Z"
-            },
-            "updatedAt": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:31:22.235Z"
-            }
-          }
-        },
-  
-        "UpdateBoardRequest": {
-          "type": "object",
-          "properties": {
-            "title": {
-              "type": "string",
-              "description": "Board's title",
-              "example": "First Board"
-            },
-            "icon": {
-              "type": "string",
-              "description": "Board's icon",
-              "enum": [
-                "icon-colors",
-                "icon-container",
-                "icon-hexagon",
-                "icon-lightning",
-                "icon-loading",
-                "icon-project",
-                "icon-star",
-                "icon-puzzle-piece"
-              ],
-              "example": "icon-hexagon"
-            },
-            "background": {
-              "type": "string",
-              "description": "Board's background",
-              "enum": [
-                "airBalloon",
-                "blue",
-                "cappadocia",
-                "flowers",
-                "gorge",
-                "greens",
-                "moon",
-                "mountains",
-                "rocksAndSea",
-                "sea",
-                "semiMoon",
-                "trailer",
-                "tree",
-                "yacht",
-                "violetSphere",
-                "default"
-              ],
-              "example": "greens"
-            }
-          }
-        },
-        "UpdateBoardResponse": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "description": "Board id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "title": {
-              "type": "string",
-              "description": "Board's title",
-              "example": "First Board"
-            },
-            "icon": {
-              "type": "string",
-              "description": "Board's icon",
-              "enum": [
-                "icon-colors",
-                "icon-container",
-                "icon-hexagon",
-                "icon-lightning",
-                "icon-loading",
-                "icon-project",
-                "icon-star",
-                "icon-puzzle-piece"
-              ],
-              "example": "icon-hexagon"
-            },
-            "background": {
-              "type": "string",
-              "description": "Board's background title",
-              "example": "greens"
-            },
-            "columnOrder": {
-              "type": "array",
-              "description": "Column order",
-              "example": []
-            },
-            "owner": {
-              "type": "string",
-              "description": "User's id",
-              "example": "64d11ad3b31bb700519dad42"
-            },
-            "createdAt": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:30:47.840Z"
-            },
-            "updatedAt": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:31:22.235Z"
-            }
-          }
-        },
-  
-        "DeleteBoardResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "Board id",
-              "example": "Board {id} deleted successfully"
-            },
-            "data": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "type": "string",
-                  "description": "Board id",
-                  "example": "64d360ea78fe376e4981199f"
-                },
-                "title": {
-                  "type": "string",
-                  "description": "Board's title",
-                  "example": "First Board"
-                },
-                "icon": {
-                  "type": "string",
-                  "description": "Board's icon",
-                  "enum": [
-                    "icon-colors",
-                    "icon-container",
-                    "icon-hexagon",
-                    "icon-lightning",
-                    "icon-loading",
-                    "icon-project",
-                    "icon-star",
-                    "icon-puzzle-piece"
-                  ],
-                  "example": "icon-hexagon"
-                },
-                "background": {
-                  "type": "string",
-                  "description": "Board's background title",
-                  "example": "moon"
-                },
-                "columnOrder": {
-                  "type": "array",
-                  "description": "Column order",
-                  "example": []
-                },
-                "owner": {
-                  "type": "string",
-                  "description": "User's id",
-                  "example": "64d11ad3b31bb700519dad42"
-                },
-                "createdAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "example": "2023-08-09T18:30:47.840Z"
-                },
-                "updatedAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "example": "2023-08-09T18:31:22.235Z"
-                }
-              }
-            }
-          }
-        },
-  
-        "AddColumnRequest": {
-          "type": "object",
-          "properties": {
-            "title": {
-              "type": "string",
-              "description": "Column's title",
-              "example": "First Column"
-            },
-            "board": {
-              "type": "string",
-              "description": "Board id",
-              "example": "64d360ea78fe376e4981199f"
-            }
-          },
-          "required": ["title", "board"]
-        },
-        "AddColumnResponse": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "description": "Column`s id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "title": {
-              "type": "string",
-              "description": "Column's title",
-              "example": "First Column"
-            },
-            "board": {
-              "type": "string",
-              "description": "Board id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "taskOrder": {
-              "type": "array",
-              "description": "Task order",
-              "example": []
-            },
-            "createdAt": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:30:47.840Z"
-            },
-            "updatedAt": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:31:22.235Z"
-            }
-          }
-        },
-  
-        "UpdateColumnRequest": {
-          "type": "object",
-          "properties": {
-            "title": {
-              "type": "string",
-              "description": "Column's title",
-              "example": "First Column"
-            }
-          },
-          "required": ["title"]
-        },
-        "UpdateColumnResponse": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "description": "Column`s id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "title": {
-              "type": "string",
-              "description": "Column's title",
-              "example": "First Column"
-            },
-            "board": {
-              "type": "string",
-              "description": "Board id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "taskOrder": {
-              "type": "array",
-              "description": "Task order",
-              "example": []
-            },
-            "createdAt": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:30:47.840Z"
-            },
-            "updatedAt": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:31:22.235Z"
-            }
-          }
-        },
-  
-        "TransferColumnRequest": {
-          "type": "object",
-          "properties": {
-            "source": {
-              "type": "object",
-              "properties": {
-                "index": {
-                  "type": "number",
-                  "description": "Column index",
-                  "example": 0
-                },
-                "droppableId": {
-                  "type": "string",
-                  "description": "Column id",
-                  "example": "64d360ea78fe376e4981199f"
-                }
-              },
-              "required": ["droppableId"]
-            },
-            "destination": {
-              "type": "object",
-              "properties": {
-                "index": {
-                  "type": "number",
-                  "description": "Column index",
-                  "example": 1
-                },
-                "droppableId": {
-                  "type": "string",
-                  "description": "Column id",
-                  "example": "64d360ea78fe376e4981199f"
-                }
-              },
-              "required": ["index", "droppableId"]
-            }
-          }
-        },
-        "TransferColumnResponse": {
-          "type": "object",
-          "properties": {
-            "board": {
-              "type": "string",
-              "description": "Board id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "message": {
-              "type": "string",
-              "description": "Board's title",
-              "example": "Column position has been changed to {index} on board {id}"
-            }
-          }
-        },
-  
-        "DeleteColumnResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "Column id",
-              "example": "Column {id} deleted successfully"
-            },
-            "data": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "type": "string",
-                  "description": "Column id",
-                  "example": "64d360ea78fe376e4981199f"
-                },
-                "title": {
-                  "type": "string",
-                  "description": "Column's title",
-                  "example": "First Column"
-                },
-                "board": {
-                  "type": "string",
-                  "description": "Board id",
-                  "example": "64d360ea78fe376e4981199f"
-                },
-                "taskOrder": {
-                  "type": "array",
-                  "description": "Task order",
-                  "example": []
-                },
-                "createdAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "example": "2023-08-09T18:30:47.840Z"
-                },
-                "updatedAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "example": "2023-08-09T18:31:22.235Z"
-                }
-              }
-            }
-          }
-        },
-  
-        "AddTaskRequest": {
-          "type": "object",
-          "properties": {
-            "title": {
-              "type": "string",
-              "description": "Task's title",
-              "example": "First Task"
-            },
-            "description": {
-              "type": "string",
-              "description": "Task's description",
-              "example": "Description of the task"
-            },
-            "priority": {
-              "type": "string",
-              "description": "User's theme",
-              "enum": ["without", "low", "medium", "high"],
-              "example": "low"
-            },
-            "deadline": {
-              "type": "string",
-              "description": "Task's deadline",
-              "example": "10/08/2023"
-            },
-            "column": {
-              "type": "string",
-              "description": "Board id",
-              "example": "64d360ea78fe376e4981199f"
-            }
-          },
-          "required": ["title", "description", "column"]
-        },
-        "AddTaskResponse": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "description": "Task`s id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "title": {
-              "type": "string",
-              "description": "Task's title",
-              "example": "First Task"
-            },
-            "description": {
-              "type": "string",
-              "description": "Task's description",
-              "example": "Description of the task"
-            },
-            "priority": {
-              "type": "string",
-              "description": "User's theme",
-              "enum": ["without", "low", "medium", "high"],
-              "example": "low"
-            },
-            "deadline": {
-              "type": "string",
-              "description": "Task's deadline",
-              "example": "10/08/2023"
-            },
-            "board": {
-              "type": "string",
-              "description": "Board id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "column": {
-              "type": "string",
-              "description": "Column id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "createdAt": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:30:47.840Z"
-            },
-            "updatedAt": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:31:22.235Z"
-            }
-          }
-        },
-  
-        "UpdateTaskRequest": {
-          "type": "object",
-          "properties": {
-            "title": {
-              "type": "string",
-              "description": "Task's title",
-              "example": "First Task"
-            },
-            "description": {
-              "type": "string",
-              "description": "Task's description",
-              "example": "Description of the task"
-            },
-            "priority": {
-              "type": "string",
-              "description": "User's theme",
-              "enum": ["without", "low", "medium", "high"],
-              "example": "low"
-            },
-            "deadline": {
-              "type": "string",
-              "description": "Task's deadline",
-              "example": "10/08/2023"
-            }
-          }
-        },
-        "UpdateTaskResponse": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "description": "Task`s id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "title": {
-              "type": "string",
-              "description": "Task's title",
-              "example": "First Task"
-            },
-            "description": {
-              "type": "string",
-              "description": "Task's description",
-              "example": "Description of the task"
-            },
-            "priority": {
-              "type": "string",
-              "description": "User's theme",
-              "enum": ["without", "low", "medium", "high"],
-              "example": "low"
-            },
-            "deadline": {
-              "type": "string",
-              "description": "Task's deadline",
-              "example": "10/08/2023"
-            },
-            "board": {
-              "type": "string",
-              "description": "Board id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "column": {
-              "type": "string",
-              "description": "Column id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "createdAt": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:30:47.840Z"
-            },
-            "updatedAt": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:31:22.235Z"
-            }
-          }
-        },
-  
-        "TransferTaskRequest": {
-          "type": "object",
-          "properties": {
-            "source": {
-              "type": "object",
-              "properties": {
-                "index": {
-                  "type": "number",
-                  "description": "Task index",
-                  "example": 0
-                },
-                "droppableId": {
-                  "type": "string",
-                  "description": "Task id",
-                  "example": "64d360ea78fe376e4981199f"
-                }
-              },
-              "required": ["droppableId"]
-            },
-            "destination": {
-              "type": "object",
-              "properties": {
-                "index": {
-                  "type": "number",
-                  "description": "Task index",
-                  "example": 1
-                },
-                "droppableId": {
-                  "type": "string",
-                  "description": "Task id",
-                  "example": "64d360ea78fe376e4981199f"
-                }
-              },
-              "required": ["index", "droppableId"]
-            }
-          }
-        },
-        "TransferTaskResponse": {
-          "type": "object",
-          "properties": {
-            "board": {
-              "type": "string",
-              "description": "Board id",
-              "example": "64d360ea78fe376e4981199f"
-            },
-            "message": {
-              "type": "string",
-              "description": "Board's title",
-              "example": "Task position has been changed to {index} in column {id}"
-            }
-          }
-        },
-  
         "DeleteTaskResponse": {
           "type": "object",
           "properties": {
@@ -2171,36 +1587,6 @@
               "type": "string",
               "description": "Error message",
               "example": "Not Found"
-            }
-          }
-        },
-        "errorNotFoundBoardResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "Error message",
-              "example": "Board {id} not found"
-            }
-          }
-        },
-        "errorNotFoundColumnResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "Error message",
-              "example": "Column {id} not found"
-            }
-          }
-        },
-        "errorNotFoundTaskResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "Error message",
-              "example": "Task {id} not found"
             }
           }
         },
