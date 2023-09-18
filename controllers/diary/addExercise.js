@@ -1,6 +1,6 @@
 const { Diary } = require('../../models');
 const { Exercise } = require('../../models');
-const { nanoid } = require("nanoid");
+
 
 const addExercise = async (req, res) => {
   const { _id: owner } = req.user;
