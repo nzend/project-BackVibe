@@ -3,12 +3,12 @@ const { HttpError } = require("../../helpers");
 
 const deleteProduct = async (req, res) => {
     const { _id: owner } = req.user;
-    const { date, id } = req.body; 
+    const { date, productId } = req.body; 
 
   
       const result = await Diary.findOneAndUpdate(
         { owner, date },
-        { $pull: { products: { _id: id } } }, 
+        { $pull: { products: { _id: productId } } }, 
         { new: true }
       );
   

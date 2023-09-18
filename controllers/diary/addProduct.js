@@ -15,7 +15,6 @@ const addProducts = async (req, res) => {
     return product.groupBloodNotAllowed && product.groupBloodNotAllowed[bloodGroup] === true;
   };
   const newProduct = {
-    _id: product._id,
     title: product.title,
     category: product.category,
     amount,
