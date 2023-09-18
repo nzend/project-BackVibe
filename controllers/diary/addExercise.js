@@ -2,31 +2,41 @@ const { Diary } = require('../../models');
 
 const addExercise = async (req, res) => {
   const { _id: owner } = req.user;
-  console.log(owner);
+  const { date, productId, amount, calories } = req.body;
+  const { blood } = req.user.bodyParameters;
 
-  console.log("REQ BODY", req.body);
-  const { date, exercise } = req.body;
+  const product = await Product.findOne(
+    { _id: productId },
+    "-createdAt -updatedAt"
+  );
+  
+  const isRecommend = (bloodGroup) => {
+    return product.groupBloodNotAllowed && product.groupBloodNotAllowed[bloodGroup] === true;
+  };
+  const newProduct = {
+    _id: product._id,
+    title: product.title,
+    category: product.category,
+    amount,
+    calories,
+    recommend: isRecommend(blood),
+  };
 
   try {
     const result = await Diary.findOneAndUpdate(
-      { owner, date }, // Пошук запису за owner та date
-      { $push: { exercises: exercise } }, // Додавання нового продукту до products
-      { new: true } // Повертає оновлений запис
+      { owner, date }, 
+      { $push: { products: newProduct }}, 
+      { new: true } 
     );
-
-    console.log("RESULT", result);
-
     if (!result) {
-      // Якщо запис не знайдено, створити новий
-      const newDiaryEntry = await Diary.create({ owner, date, exercises: [exercise] });
-      console.log("NEW ENTRY", newDiaryEntry);
+      const newDiaryEntry = await Diary.create({ owner, date, products: [newProduct] });
+
       res.status(201).json(newDiaryEntry);
     } else {
       res.status(200).json(result);
     }
   } catch (error) {
-    console.error("ERROR", error);
-    res.status(500).json({ error: "Помилка при додаванні продукту до бази даних." });
+    res.status(500)
   }
 };
 
