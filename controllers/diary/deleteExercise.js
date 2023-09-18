@@ -3,11 +3,12 @@ const { HttpError } = require('../../helpers');
 
 const deleteExercise = async (req, res) => {
   const { _id: owner } = req.user;
-  const { date, id } = req.body;
+  const { date, exerciseId } = req.body;
+
 
   const result = await Diary.findOneAndUpdate(
     { owner, date },
-    { $pull: { exercises: { _id: id } } },
+    { $pull: { exercises: { _id: exerciseId } } }, 
     { new: true }
   );
 

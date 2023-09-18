@@ -43,7 +43,6 @@ const diarySchema = new Schema(
 
     exercises: [
       {
-        type: Object,
         bodyPart: {
           type: String,
         },
