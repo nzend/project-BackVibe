@@ -12,6 +12,7 @@ const diarySchema = new Schema(
       type: Date,
       required: true,
     },
+  
     products:
     [{weight: {
       type: Number,
@@ -30,13 +31,21 @@ const diarySchema = new Schema(
 
     
     },
+    amount: {
+      type: Number,
+      required: true
+    },
+    calories: {
+      type: Number,
+      required: true
+    },
     recommend: {
       type: Boolean,
    
     }, 
   }],
    
-    exercises: {
+    exercises: [{
       type: Object,
       bodyPart: {
         type: String,
@@ -62,7 +71,7 @@ const diarySchema = new Schema(
         type: Number,
        
       }, 
-    }
+    }]
   },
   { versionKey: false, timestamps: true }
 );
