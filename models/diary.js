@@ -9,69 +9,61 @@ const diarySchema = new Schema(
       required: true,
     },
     date: {
-      type: Date,
+      type: String,
       required: true,
     },
-  
-    products:
-    [{weight: {
-      type: Number,
 
-    },
-    calories: {
-      type: Number,
- 
-    },
-    category: {
-      type: String,
-
-    },
-    title: {
-      type: String,
-
-    
-    },
-    amount: {
-      type: Number,
-      required: true
-    },
-    calories: {
-      type: Number,
-      required: true
-    },
-    recommend: {
-      type: Boolean,
-   
-    }, 
-  }],
-   
-    exercises: [{
-      type: Object,
-      bodyPart: {
-        type: String,
-      
+    products: [
+      {
+        weight: {
+          type: Number,
+        },
+        calories: {
+          type: Number,
+        },
+        category: {
+          type: String,
+        },
+        title: {
+          type: String,
+        },
+        amount: {
+          type: Number,
+          required: true,
+        },
+        calories: {
+          type: Number,
+          required: true,
+        },
+        recommend: {
+          type: Boolean,
+        },
       },
-      equipment: {
-        type: String,
-      
-      }, 
-      name: {
-        type: String,
-       
-      }, 
-      target: {
-        type: String,
-      
-      }, 
-      burnedCalories: {
-        type: Number,
-        
-      }, 
-      time: {
-        type: Number,
-       
-      }, 
-    }]
+    ],
+
+    exercises: [
+      {
+        type: Object,
+        bodyPart: {
+          type: String,
+        },
+        equipment: {
+          type: String,
+        },
+        name: {
+          type: String,
+        },
+        target: {
+          type: String,
+        },
+        burnedCalories: {
+          type: Number,
+        },
+        time: {
+          type: Number,
+        },
+      },
+    ],
   },
   { versionKey: false, timestamps: true }
 );
