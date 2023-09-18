@@ -1,7 +1,17 @@
 const authRouter = require("./auth");
 const dairyRouter = require("./dairy")
+const exercisesRouter = require('./exercises');
+const filterRouter = require('./filter');
+const productsRouter = require('./products');
+
+
+
+
 
 module.exports = {
   authRouter,
-  dairyRouter,
+  exercisesRouter,
+  filterRouter,
+  productsRouter,
+  dairyRouter
 };
