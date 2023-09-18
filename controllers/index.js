@@ -5,15 +5,10 @@ const ctrlFilter = require('./filter');
 const ctrlProducts = require('./products');
 
 
-
- 
-
-
 module.exports = {
   ctrlAuth,
   ctrlExercises,
   ctrlFilter,
   ctrlProducts,
   ctrlDiary,
- 
 };
