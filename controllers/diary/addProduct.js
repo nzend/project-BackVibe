@@ -10,6 +10,7 @@ const addProducts = async (req, res) => {
     { _id: productId },
     "-createdAt -updatedAt"
   );
+  
   const isRecommend = (bloodGroup) => {
     return product.groupBloodNotAllowed && product.groupBloodNotAllowed[bloodGroup] === true;
   };
@@ -17,7 +18,6 @@ const addProducts = async (req, res) => {
     _id: product._id,
     title: product.title,
     category: product.category,
-    weight: product.weight,
     amount,
     calories,
     recommend: isRecommend(blood),
@@ -29,9 +29,6 @@ const addProducts = async (req, res) => {
       { $push: { products: newProduct }}, 
       { new: true } 
     );
-  
- 
-  
     if (!result) {
       const newDiaryEntry = await Diary.create({ owner, date, products: [newProduct] });
 
