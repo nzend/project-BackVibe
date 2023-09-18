@@ -5,7 +5,7 @@ const app = express();
 
 // Іменований імпорт роутів
 
-const { authRouter, exercisesRouter, filterRouter, productsRouter, dairyRouter  } = require('./routes/api');
+const { authRouter, exercisesRouter, filterRouter, productsRouter, diaryRouter  } = require('./routes/api');
 // ___________________________________
 
 // Тут нічого не чіпаємо!!!!
@@ -22,7 +22,7 @@ app.use('/api/products', productsRouter);
 app.use('/api/exercises', exercisesRouter);
 app.use('/api/filter', filterRouter);
 app.use("/api/users", authRouter);
-app.use('/api/dairy', dairyRouter);
+app.use('/api/diary', diaryRouter);
 
 // _____________________________________________
 
