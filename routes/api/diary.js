@@ -7,4 +7,6 @@ router.post('/add-product', authenticate, ctrlDiary.addProducts);
 
 router.post('/add-exercise', authenticate, ctrlDiary.addExercise);
 
+router.delete('/delete-exercise', authenticate, ctrlDiary.deleteExercise);
+
 module.exports = router;
