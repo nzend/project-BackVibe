@@ -4,7 +4,8 @@ const cors = require('cors');
 const app = express();
 
 // Іменований імпорт роутів
-const { authRouter, exercisesRouter, filterRouter, productsRouter } = require('./routes/api');
+
+const { authRouter, exercisesRouter, filterRouter, productsRouter, dairyRouter  } = require('./routes/api');
 // ___________________________________
 
 // Тут нічого не чіпаємо!!!!

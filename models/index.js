@@ -5,7 +5,7 @@ const Product = require("./product")
 
 module.exports = {
   User,
+  Product,
   Exercise,
   Filter,
-  Product
 };
