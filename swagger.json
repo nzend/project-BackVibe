@@ -861,6 +861,12 @@
               "type":"string",       
               "example": "abs"
           
+            },
+            {
+              "name": "_id",
+              "type":"string",       
+              "example": "650493ba8502d2cfefa1a44d"
+          
             }
           ],     
           "security": [{ "Bearer": [] }],
@@ -912,26 +918,15 @@
         "get": {
           "tags": ["Filter"],
           "summary": "Get Exercises list",
+          "enum": ["Body parts", "Equipment", "Muscles"],
           "parameters": [
             {
               "name": "filter",
-              "enum": ["Body parts", "Equipment", "Muscles"],
               "type":"string",
               "example": "Body parts"
              
-            }, 
-            {
-              "name": "equipment",
-              "type":"string",          
-              "example": "body weight"
-             
-            }, 
-            {
-              "name": "target",
-              "type":"string",       
-              "example": "abs"
-          
             }
+         
           ],     
           "security": [{ "Bearer": [] }],
           "responses": {
