@@ -31,7 +31,11 @@
       },
       {
         "name": "Filter",
-        "description": "Exercises endpoints"
+        "description": "Filter endpoints"
+      },
+      {
+        "name": "Categories",
+        "description": "Categories endpoints"
       }
     ],
   
@@ -973,8 +977,56 @@
             }
           }
         }          
-      }
-    
+      },
+      "/api/categories": {
+        "get": {
+          "tags": ["Categories"],
+          "summary": "Get categories list",     
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful operation, Categories list is got",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GetAllProductsCategories"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }          
+      } 
     },
   
     "components": {
@@ -1562,6 +1614,44 @@
                 "example": "https://res.cloudinary.com/dn4iogcf4/image/upload/v1694553685/back_wzzphw.jpg"
               }
            
+            }
+          }
+        },
+        "GetAllProductsCategories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Categories id",
+                "example": "64d360ea78fe376e4981199f"
+              },
+              "categories": {
+                "type": "array",
+                "description": "Categories array",
+                "example": [
+                  "alcoholic drinks",
+                  "berries",
+                  "cereals",
+                  "dairy",
+                  "dried fruits",
+                  "eggs",
+                  "fish",
+                  "flour",
+                  "fruits",
+                  "meat",
+                  "mushrooms",
+                  "nuts",
+                  "oils and fats",
+                  "poppy",
+                  "sausage",
+                  "seeds",
+                  "sesame",
+                  "soft drinks",
+                  "vegetables and herbs"
+              ]
+              }
             }
           }
         },
