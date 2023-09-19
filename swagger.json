@@ -28,6 +28,10 @@
       {
         "name": "Exercises",
         "description": "Exercises endpoints"
+      },
+      {
+        "name": "Filter",
+        "description": "Exercises endpoints"
       }
     ],
   
@@ -599,27 +603,27 @@
       "/api/diary/delete-exercise": {
         "delete": {
           "tags": ["Diary"],
-          "summary": "Add exercise in to user diary",
+          "summary": "Delete exersise by date and id",
           "parameters": [],
           "security": [{ "Bearer": [] }],
           "requestBody": {
-            "description": "Add prodexercise in to user diary",
+            "description": "Delete exersise by date and id",
             "required": true,
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddExerciseInUsersDiaryRequest"
+                  "$ref": "#/components/schemas/DeleteExersiseRequest"
                 }
               }
             }
           },
           "responses": {
             "200": {
-              "description": "Successful operation, user exercise created",
+              "description": "Successful operation, exersise was deleted",
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/AddExerciseInUsersDiaryResponse"
+                    "$ref": "#/components/schemas/DeleteExersiseResponse"
                   }
                 }
               }
@@ -666,6 +670,309 @@
             }
           }
         }
+      },
+      "/api/diary/delete-product": {
+        "delete": {
+          "tags": ["Diary"],
+          "summary": "Delete product by date and id",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "requestBody": {
+            "description": "Delete product by date and id",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteProductRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful operation, exersise was deleted",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DeleteProductResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBadRequestResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/products": {
+        "get": {
+          "tags": ["Products"],
+          "summary": "Get Products list",
+          "parameters": [
+            {
+              "name": "page",
+              "type":"number",
+              "example": 1
+             
+            },
+            {
+              "name": "limit",
+              "type":"string",
+              
+              "example": 10
+              
+            },
+            {
+              "name": "recommended",
+              "type":"boolean",
+              "example": true
+             
+            }, 
+            {
+              "name": "category",
+              "type":"string",          
+              "example": "fish"
+             
+            }, 
+            {
+              "name": "title",
+              "type":"string",       
+              "example": "marlin"
+          
+            }
+          ],     
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful operation, diaries list is got",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GetAllProductsResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }          
+      },
+      "/api/exercises": {
+        "get": {
+          "tags": ["Exercises"],
+          "summary": "Get Exercises list",
+          "parameters": [
+            {
+              "name": "page",
+              "type":"number",
+              "example": 1
+            },
+            {
+              "name": "limit",
+              "type":"string",
+              "example": 10
+              
+            },
+            {
+              "name": "bodyPart",
+              "type":"string",
+              "example": "waist"
+             
+            }, 
+            {
+              "name": "equipment",
+              "type":"string",          
+              "example": "body weight"
+             
+            }, 
+            {
+              "name": "target",
+              "type":"string",       
+              "example": "abs"
+          
+            }
+          ],     
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful operation, diaries list is got",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GetAllExercisesResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }          
+      },
+      "/api/filter": {
+        "get": {
+          "tags": ["Filter"],
+          "summary": "Get Exercises list",
+          "parameters": [
+            {
+              "name": "filter",
+              "enum": ["Body parts", "Equipment", "Muscles"],
+              "type":"string",
+              "example": "Body parts"
+             
+            }, 
+            {
+              "name": "equipment",
+              "type":"string",          
+              "example": "body weight"
+             
+            }, 
+            {
+              "name": "target",
+              "type":"string",       
+              "example": "abs"
+          
+            }
+          ],     
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful operation, diaries list is got",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GetAllFilters"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }          
       }
     
     },
@@ -1119,8 +1426,7 @@
             }
           
           }
-        },
-    
+        },   
         "GetAllProductsResponse": {
           "type": "array",
           "items": {
@@ -1178,16 +1484,6 @@
                     "example": false
                   }
                 }
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time",
-                "example": "2023-08-09T18:30:47.840Z"
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time",
-                "example": "2023-08-09T18:31:22.235Z"
               }
             }
           }
@@ -1237,6 +1533,35 @@
                 "description": "Exercise time in minuts",
                 "example": 3
               }
+            }
+          }
+        },
+        "GetAllFilters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "filter id",
+                "example": "64d360ea78fe376e4981199f"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Exersice type",
+                "example": "Body parts"
+              },
+              "name": {
+                "type": "string",
+                "description": "Exercise categoty",
+                "example": "back"
+              },
+              "imgURL": {
+                "type": "string",
+                "description": "Exercise background image",
+                "example": "https://res.cloudinary.com/dn4iogcf4/image/upload/v1694553685/back_wzzphw.jpg"
+              }
+           
             }
           }
         },
@@ -1600,125 +1925,131 @@
               }
             }
         }, 
-        "DeleteTaskResponse": {
+        "DeleteExersiseRequest": {
           "type": "object",
           "properties": {
-            "message": {
-              "type": "string",
-              "description": "Task id",
-              "example": "Task {id} deleted successfully"
-            },
-            "data": {
+            "exerciseId": {
+                "type": "string",
+                "description": "Task id",
+                "example": "65089a8b1e77419dc4fa2b2e"
+              },
+                "date": {
+                  "type": "string",
+                  "description": "Task date",
+                  "example": "19-09-2023"
+                }
+              } 
+        },
+        "DeleteExersiseResponse": {
+          "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Exersise id",
+                "example": "Exersise {id} deleted successfully"
+              }
+              }
+        },
+        "DeleteProductRequest": {
               "type": "object",
               "properties": {
-                "_id": {
-                  "type": "string",
-                  "description": "Task id",
-                  "example": "64d360ea78fe376e4981199f"
-                },
-                "title": {
-                  "type": "string",
-                  "description": "Task's title",
-                  "example": "First Task"
-                },
-                "column": {
-                  "type": "string",
-                  "description": "Column id",
-                  "example": "64d360ea78fe376e4981199f"
-                },
-                "taskOrder": {
-                  "type": "array",
-                  "description": "Task order",
-                  "example": []
-                },
-                "createdAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "example": "2023-08-09T18:30:47.840Z"
-                },
-                "updatedAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "example": "2023-08-09T18:31:22.235Z"
-                }
+                "productId": {
+                    "type": "string",
+                    "description": "Product id",
+                    "example": "65089a8b1e77419dc4fa2b2e"
+                  },
+                    "date": {
+                      "type": "string",
+                      "description": "Product date",
+                      "example": "19-09-2023"
+                    }
+                  } 
+        },
+        "DeleteProductResponse": {
+              "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "description": "Product id",
+                    "example": "Product {id} deleted successfully"
+                  }
+                  }
+        },
+        "successfulCreateResponse": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Success message",
+                "example": "User data was created successful"
               }
             }
-          }
-        },
-
-        "successfulCreateResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "Success message",
-              "example": "User data was created successful"
-            }
-          }
         },
         "successfulUpdateResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "Success message",
-              "example": "User data was updated successful"
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Success message",
+                "example": "User data was updated successful"
+              }
             }
-          }
         },
-        
+          
         "errorBadRequestResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "Error message",
-              "example": "This text will describe what is wrong with the request body"
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Error message",
+                "example": "This text will describe what is wrong with the request body"
+              }
             }
-          }
         },
         "errorConflictResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "Error message",
-              "example": "Email has already in use"
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Error message",
+                "example": "Email has already in use"
+              }
             }
-          }
         },
         "errorUnauthorizedResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "Error message",
-              "example": "Unauthorized"
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Error message",
+                "example": "Unauthorized"
+              }
             }
-          }
         },
-        "errorNotFoundResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "Error message",
-              "example": "Not Found"
+          "errorNotFoundResponse": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Error message",
+                "example": "Not Found"
+              }
             }
-          }
         },
         "errorServerResponse": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string",
-              "description": "Error message",
-              "example": "This text will describe what is wrong with the internal server"
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Error message",
+                "example": "This text will describe what is wrong with the internal server"
+              }
             }
-          }
         }
         }
-      },
+         
+        }, 
+        
       "securitySchemes": {
         "Bearer": {
           "type": "http",
@@ -1727,4 +2058,6 @@
         }
       }
     }
+    
+    
   
