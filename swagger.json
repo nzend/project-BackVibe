@@ -1,0 +1,2153 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "version": "2.0.2",
+      "title": "Swagger Power Pulse",
+      "description": "Showing off Power Pulse work",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "consumes": ["application/json", "multipart/form-data"],
+    "produces": ["application/json"],
+    "servers": [{ "url": "https://power-pulse-rest-api.onrender.com" }, {"url": "http://localhost:3000/api-docs"}],
+    "tags": [
+      {
+        "name": "Users",
+        "description": "Users endpoints"
+      },
+      {
+        "name": "Diary",
+        "description": "Diary endpoints"
+      },
+      {
+        "name": "Products",
+        "description": "Products endpoints"
+      },
+      {
+        "name": "Exercises",
+        "description": "Exercises endpoints"
+      },
+      {
+        "name": "Filter",
+        "description": "Filter endpoints"
+      },
+      {
+        "name": "Categories",
+        "description": "Categories endpoints"
+      }
+    ],
+  
+    "paths": {
+      "/api/users/register": {
+        "post": {
+          "tags": ["Users"],
+          "summary": "User registration",
+          "parameters": [],
+          "requestBody": {
+            "description": "Registration's object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "User created, registration successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RegistrationResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBadRequestResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict (Provided email already exists)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorConflictResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/users/login": {
+        "post": {
+          "tags": ["Users"],
+          "summary": "User login",
+          "parameters": [],
+          "requestBody": {
+            "description": "Login's object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Login successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/LoginResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBadRequestResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/users/current": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "Get current user",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful operation, get current user",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CurrentUserResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/users/create": {
+        "post": {
+          "tags": ["Users"],
+          "summary": "User data create",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "requestBody": {
+            "description": "Create user's object-data (multipart/form-data)",
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDataRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful operation, user  data created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/successfulCreateResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBadRequestResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/users/update": {
+        "patch": {
+          "tags": ["Users"],
+          "summary": "User data create",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "requestBody": {
+            "description": "Create user's object-data (multipart/form-data)",
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDataResponse"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful operation, user  data updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/successfulUpdateResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBadRequestResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized ",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/users/logout": {
+        "post": {
+          "tags": ["Users"],
+          "summary": "User logout",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "204": {
+              "description": "Logout successful, No Content"
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/diary": {
+        "get": {
+          "tags": ["Diary"],
+          "summary": "Get Diary list",
+          "parameters": [
+            {
+              "type":"string",
+              "name": "date",
+              "example": "19-09-2023",
+              "required": true
+            }
+          ],
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful operation, diaries list is got",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GetDiaryByDateResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }          
+      },
+      "/api/diary/add-product": {
+        "post": {
+          "tags": ["Diary"],
+          "summary": "Add product in to user diary",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "requestBody": {
+            "description": "Add product in to user diary",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddProductInUsersDiaryRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful operation, user  product created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AddProductInUsersDiaryResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBadRequestResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/diary/add-exercise": {
+        "post": {
+          "tags": ["Diary"],
+          "summary": "Add exercise in to user diary",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "requestBody": {
+            "description": "Add prodexercise in to user diary",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddExerciseInUsersDiaryRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful operation, user exercise created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AddExerciseInUsersDiaryResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBadRequestResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/diary/delete-exercise": {
+        "delete": {
+          "tags": ["Diary"],
+          "summary": "Delete exersise by date and id",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "requestBody": {
+            "description": "Delete exersise by date and id",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteExersiseRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful operation, exersise was deleted",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DeleteExersiseResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBadRequestResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/diary/delete-product": {
+        "delete": {
+          "tags": ["Diary"],
+          "summary": "Delete product by date and id",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "requestBody": {
+            "description": "Delete product by date and id",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteProductRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful operation, exersise was deleted",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DeleteProductResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorBadRequestResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/products": {
+        "get": {
+          "tags": ["Products"],
+          "summary": "Get Products list",
+          "parameters": [
+            {
+              "name": "page",
+              "type":"number",
+              "example": 1
+             
+            },
+            {
+              "name": "limit",
+              "type":"string",
+              
+              "example": 10
+              
+            },
+            {
+              "name": "recommended",
+              "type":"boolean",
+              "example": true
+             
+            }, 
+            {
+              "name": "category",
+              "type":"string",          
+              "example": "fish"
+             
+            }, 
+            {
+              "name": "title",
+              "type":"string",       
+              "example": "marlin"
+          
+            }
+          ],     
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful operation, diaries list is got",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GetAllProductsResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }          
+      },
+      "/api/exercises": {
+        "get": {
+          "tags": ["Exercises"],
+          "summary": "Get Exercises list",
+          "parameters": [
+            {
+              "name": "page",
+              "type":"number",
+              "example": 1
+            },
+            {
+              "name": "limit",
+              "type":"string",
+              "example": 10
+              
+            },
+            {
+              "name": "bodyPart",
+              "type":"string",
+              "example": "waist"
+             
+            }, 
+            {
+              "name": "equipment",
+              "type":"string",          
+              "example": "body weight"
+             
+            }, 
+            {
+              "name": "target",
+              "type":"string",       
+              "example": "abs"
+          
+            }
+          ],     
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful operation, diaries list is got",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GetAllExercisesResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }          
+      },
+      "/api/filter": {
+        "get": {
+          "tags": ["Filter"],
+          "summary": "Get Exercises list",
+          "parameters": [
+            {
+              "name": "filter",
+              "enum": ["Body parts", "Equipment", "Muscles"],
+              "type":"string",
+              "example": "Body parts"
+             
+            }, 
+            {
+              "name": "equipment",
+              "type":"string",          
+              "example": "body weight"
+             
+            }, 
+            {
+              "name": "target",
+              "type":"string",       
+              "example": "abs"
+          
+            }
+          ],     
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful operation, diaries list is got",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GetAllFilters"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }          
+      },
+      "/api/categories": {
+        "get": {
+          "tags": ["Categories"],
+          "summary": "Get categories list",     
+          "security": [{ "Bearer": [] }],
+          "responses": {
+            "200": {
+              "description": "Successful operation, Categories list is got",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GetAllProductsCategories"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized (email or password is wrong)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }          
+      } 
+    },
+  
+    "components": {
+      "schemas": {
+        "RegistrationRequest": {
+          "type": "object",
+          "required": ["name", "email", "password"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "User's name. It must contain only Latin letters; may contain space, numbers, signs, letters in different case",
+              "example": "Mango"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email. It must contain only Latin letters; may include numbers, letters in different case",
+              "format": "email",
+              "example": "mango@email.com"
+            },
+            "password": {
+              "type": "string",
+              "description": "User's password. It must contain only Latin letters; may contain numbers, signs, letters in different case; does not contain a space.",
+              "example": "Mango12378"
+            }
+          }
+        },
+        "RegistrationResponse": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "description": "User's token",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDU3YWUxNjQ1OTIxYTA2MDFhYmY2YyIsImlhdCI6MTY5NDg1Nzk1MywiZXhwIjoxNjk0OTQwNzUzfQ.seYxxZquM5Sw6P1gKXGgKog2oWPh5mJClN0c1Bf2x38"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2023-08-09T18:30:47.840Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2023-08-09T18:31:22.235Z"
+            }
+          }
+        },
+  
+        "LoginRequest": {
+          "type": "object",
+          "required": ["email", "password"],
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "User's email.  It must contain only Latin letters; may include numbers, letters in different case",
+              "format": "email",
+              "example": "mango@email.com"
+            },
+            "password": {
+              "type": "string",
+              "description": "User's password. It must contain only Latin letters, at least one uppercase, lowercase letter and a number; does not contain a space",
+              "example": "Mango12378"
+            }
+          }
+        },
+        "LoginResponse": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "description": "User's token",
+              "format": "Bearer Token",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjMzdlMTQ5MzBjMTVhMTg1ZGQyMCIsImlhdCI6MTY5MTY2NTM1MSwiZXhwIjoxNjkxNjY3MTUxfQ.6Vv03mAwPPixXqJkc0DfsYWwEY53EGJKGOUq2HZrQ9o"
+            },
+            "user": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "User's name",
+                  "example": "Mango"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "User's email",
+                  "format": "email",
+                  "example": "mango@email.com"
+                },
+               
+                "avatarURL": {
+                  "type": "string",
+                  "description": "User's avatar",
+                  "example": ""
+                },
+                "dailyСalories": {
+                  "type": "number",
+                  "description": "User's dailyCalories",
+                  "example": 2200
+                },
+                "dailyTime": {
+                  "type": "number",
+                  "description": "User's daily sport time",
+                  "example": 110
+                },
+                "bodyParameters": {
+                  "type": "object", 
+                  "properties": {
+                    "height": {
+                      "type": "number",
+                      "description": "User's height",
+                      "example": 184
+                    },
+                    "currentWeight": {
+                      "type": "number",
+                      "description": "User's current weight. Can't be more than 400.",
+                      "example": 100
+                    },
+                    "desiredWeight": {
+                      "type": "number",
+                      "description": "User's desired weight. Can't be less than 50% of current weight.",
+                      "example": 80
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "description": "User's birthday. Format dd-mm-YYYY",
+                      "example": "08-09-1999"
+                    },
+                    "blood": {
+                      "type": "number",
+                      "description": "User's blood",
+                      "enum": [1, 2, 3, 4],
+                      "example": 1
+                    },
+                    "sex": {
+                      "type": "string",
+                      "description": "User's sex",
+                      "enum": ["male", "female"],
+                      "example": "male"
+                    },
+                    "levelActivity:": {
+                      "type": "number",
+                      "description": "User's desired level activity. 1 - easy, 5 - hard",
+                      "enum": [1, 2, 3, 4, 5],
+                      "example": "1"
+                    }      
+                  }
+                }
+                
+                        
+              }
+            }
+          }
+        },
+  
+        "CurrentUserResponse": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "description": "User's token",
+              "format": "Bearer Token",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjMzdlMTQ5MzBjMTVhMTg1ZGQyMCIsImlhdCI6MTY5MTY2NTM1MSwiZXhwIjoxNjkxNjY3MTUxfQ.6Vv03mAwPPixXqJkc0DfsYWwEY53EGJKGOUq2HZrQ9o"
+            },
+            "user": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "User's name",
+                  "example": "Mango"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "User's email",
+                  "format": "email",
+                  "example": "mango@email.com"
+                },
+               
+                "avatarURL": {
+                  "type": "string",
+                  "description": "User's avatar",
+                  "example": ""
+                },
+                "dailyСalories": {
+                  "type": "number",
+                  "description": "User's dailyCalories",
+                  "example": 2200
+                },
+                "dailyTime": {
+                  "type": "number",
+                  "description": "User's daily sport time",
+                  "example": 110
+                },
+                "bodyParameters": {
+                  "type": "object", 
+                  "properties": {
+                    "height": {
+                      "type": "number",
+                      "description": "User's height",
+                      "example": 184
+                    },
+                    "currentWeight": {
+                      "type": "number",
+                      "description": "User's current weight. Can't be more than 400.",
+                      "example": 100
+                    },
+                    "desiredWeight": {
+                      "type": "number",
+                      "description": "User's desired weight. Can't be less than 50% of current weight.",
+                      "example": 80
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "description": "User's birthday. Format dd-mm-YYYY",
+                      "example": "08-09-1999"
+                    },
+                    "blood": {
+                      "type": "number",
+                      "description": "User's blood",
+                      "enum": [1, 2, 3, 4],
+                      "example": 1
+                    },
+                    "sex": {
+                      "type": "string",
+                      "description": "User's sex",
+                      "enum": ["male", "female"],
+                      "example": "male"
+                    },
+                    "levelActivity:": {
+                      "type": "number",
+                      "description": "User's desired level activity. 1 - easy, 5 - hard",
+                      "enum": [1, 2, 3, 4, 5],
+                      "example": "1"
+                    }      
+                  }
+                }          
+              }
+            }
+          }
+        },
+        "CreateUserDataRequest": {
+          "type": "object",
+          "required": ["name", "height", "currentWeight", "desiredWeight", "birthday", "blood", "sex", "levelActivity"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "User's name. It must contain only Latin letters; may contain numbers, signs, letters in different case",
+              "example": "Mango"
+            },
+            "height": {
+              "type": "number",
+              "description": "User's height",
+              "example": 184
+            },
+            "currentWeight": {
+              "type": "number",
+              "description": "User's current weight. Can't be more than 400.",
+              "example": 100
+            },
+            "desiredWeight": {
+              "type": "number",
+              "description": "User's desired weight. Can't be less than 50% of current weight.",
+              "example": 80
+            },
+            "birthday": {
+              "type": "string",
+              "description": "User's birthday. Format dd-mm-YYYY",
+              "example": "08-09-1999"
+            },
+            "blood": {
+              "type": "number",
+              "description": "User's blood",
+              "enum": [1, 2, 3, 4],
+              "example": 1
+            },
+            "sex": {
+              "type": "string",
+              "description": "User's sex",
+              "enum": ["male", "female"],
+              "example": "male"
+            },
+            "levelActivity:": {
+              "type": "number",
+              "description": "User's desired level activity. 1 - easy, 5 - hard",
+              "enum": [1, 2, 3, 4, 5],
+              "example": "1"
+            }
+          
+          }
+        },
+        "CreateUserDataResponse": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "User's name. It must contain only Latin letters; may contain numbers, signs, letters in different case",
+              "example": "Mango"
+            },
+            "avatarURL": {
+              "type": "string",
+              "description": "User's avatar",
+              "example": ""
+            },
+            "height": {
+              "type": "number",
+              "description": "User's height",
+              "example": 184
+            },
+            "currentWeight": {
+              "type": "number",
+              "description": "User's current weight. Can't be more than 400.",
+              "example": 100
+            },
+            "desiredWeight": {
+              "type": "number",
+              "description": "User's desired weight. Can't be less than 50% of current weight.",
+              "example": 80
+            },
+            "birthday": {
+              "type": "string",
+              "description": "User's birthday. Format dd-mm-YYYY",
+              "example": "08-09-1999"
+            },
+            "blood": {
+              "type": "number",
+              "description": "User's blood",
+              "enum": [1, 2, 3, 4],
+              "example": 1
+            },
+            "sex": {
+              "type": "string",
+              "description": "User's sex",
+              "enum": ["male", "female"],
+              "example": "male"
+            },
+            "levelActivity:": {
+              "type": "number",
+              "description": "User's desired level activity. 1 - easy, 5 - hard",
+              "enum": [1, 2, 3, 4, 5],
+              "example": "1"
+            }
+          
+          }
+        },
+  
+        "UpdateUserDataRequest": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "User's name. It must contain only Latin letters; may contain numbers, signs, letters in different case",
+              "example": "Mango"
+            },
+            "avatarURL": {
+              "type": "string",
+              "description": "User's avatar",
+              "example": ""
+            },
+            "height": {
+              "type": "number",
+              "description": "User's height",
+              "example": 184
+            },
+            "currentWeight": {
+              "type": "number",
+              "description": "User's current weight. Can't be more than 400.",
+              "example": 100
+            },
+            "desiredWeight": {
+              "type": "number",
+              "description": "User's desired weight. Can't be less than 50% of current weight.",
+              "example": 80
+            },
+            "birthday": {
+              "type": "string",
+              "description": "User's birthday. Format dd-mm-YYYY",
+              "example": "08-09-1999"
+            },
+            "blood": {
+              "type": "number",
+              "description": "User's blood",
+              "enum": [1, 2, 3, 4],
+              "example": 1
+            },
+            "sex": {
+              "type": "string",
+              "description": "User's sex",
+              "enum": ["male", "female"],
+              "example": "male"
+            },
+            "levelActivity:": {
+              "type": "number",
+              "description": "User's desired level activity. 1 - easy, 5 - hard",
+              "enum": [1, 2, 3, 4, 5],
+              "example": "1"
+            }
+          
+          }
+        },
+        "UpdateUserDataResponse": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "User's name. It must contain only Latin letters; may contain numbers, signs, letters in different case",
+              "example": "Mango"
+            },
+            "avatarURL": {
+              "type": "string",
+              "description": "User's avatar",
+              "example": ""
+            },
+            "height": {
+              "type": "number",
+              "description": "User's height",
+              "example": 184
+            },
+            "currentWeight": {
+              "type": "number",
+              "description": "User's current weight. Can't be more than 400.",
+              "example": 100
+            },
+            "desiredWeight": {
+              "type": "number",
+              "description": "User's desired weight. Can't be less than 50% of current weight.",
+              "example": 80
+            },
+            "birthday": {
+              "type": "string",
+              "description": "User's birthday. Format dd-mm-YYYY",
+              "example": "08-09-1999"
+            },
+            "blood": {
+              "type": "number",
+              "description": "User's blood",
+              "enum": [1, 2, 3, 4],
+              "example": 1
+            },
+            "sex": {
+              "type": "string",
+              "description": "User's sex",
+              "enum": ["male", "female"],
+              "example": "male"
+            },
+            "levelActivity:": {
+              "type": "number",
+              "description": "User's desired level activity. 1 - easy, 5 - hard",
+              "enum": [1, 2, 3, 4, 5],
+              "example": "1"
+            }
+          
+          }
+        },   
+        "GetAllProductsResponse": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Product id",
+                "example": "64d360ea78fe376e4981199f"
+              },
+              "title": {
+                "type": "string",
+                "description": "Product's title",
+                "example": "Danbo cheese"
+              },
+              "weight": {
+                "type": "number",
+                "description": "Static product weight examle",
+                "enum": [
+                  100
+                ],
+                "example": "100"
+              },
+              "calories": {
+                "type": "number",
+                "description": "Product calories/100g",
+                "example": 357
+              },
+              "category": {
+                "type": "string",
+                "description": "Product`s category",
+                "example": "cereals"
+              },
+              "groupBloodNotAllowed": {
+                "type": "object",
+                "properties": {
+                  "1": {
+                    "type": "boolean",
+                    "description": "User's blood",
+                    "example": true
+                  },
+                  "2": {
+                    "type": "boolean",
+                    "description": "User's blood",
+                    "example": true
+                  },
+                  "3": {
+                    "type": "boolean",
+                    "description": "User's blood",
+                    "example": true
+                  },
+                  "4": {
+                    "type": "boolean",
+                    "description": "User's blood",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "GetAllExercisesResponse": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "exercise id",
+                "example": "64d360ea78fe376e4981199f"
+              },
+              "bodyPart": {
+                "type": "string",
+                "description": "Exercise body part",
+                "example": "waiste"
+              },
+              "equipment": {
+                "type": "string",
+                "description": "Exercise equipment",
+                "example": "barbell"
+              },
+              "target": {
+                "type": "string",
+                "description": "Exercise target",
+                "example": "pectorals"
+              },
+              "gifUrl": {
+                "type": "string",
+                "description": "Example of an exercise ",
+                "example": "https://res.cloudinary.com/ditdqzoio/image/upload/v1687127066/exercises/0045.gif"
+              },
+              "burnedCalories": {
+                "type": "number",
+                "description": "Exercise calories/burning",
+                "example": 357
+              },
+              "name": {
+                "type": "string",
+                "description": "Exercise full name",
+                "example": "barbell guillotine bench press"
+              },
+              "time": {
+                "type": "number",
+                "description": "Exercise time in minuts",
+                "example": 3
+              }
+            }
+          }
+        },
+        "GetAllFilters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "filter id",
+                "example": "64d360ea78fe376e4981199f"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Exersice type",
+                "example": "Body parts"
+              },
+              "name": {
+                "type": "string",
+                "description": "Exercise categoty",
+                "example": "back"
+              },
+              "imgURL": {
+                "type": "string",
+                "description": "Exercise background image",
+                "example": "https://res.cloudinary.com/dn4iogcf4/image/upload/v1694553685/back_wzzphw.jpg"
+              }
+           
+            }
+          }
+        },
+        "GetAllProductsCategories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Categories id",
+                "example": "64d360ea78fe376e4981199f"
+              },
+              "categories": {
+                "type": "array",
+                "description": "Categories array",
+                "example": [
+                  "alcoholic drinks",
+                  "berries",
+                  "cereals",
+                  "dairy",
+                  "dried fruits",
+                  "eggs",
+                  "fish",
+                  "flour",
+                  "fruits",
+                  "meat",
+                  "mushrooms",
+                  "nuts",
+                  "oils and fats",
+                  "poppy",
+                  "sausage",
+                  "seeds",
+                  "sesame",
+                  "soft drinks",
+                  "vegetables and herbs"
+              ]
+              }
+            }
+          }
+        },
+        "GetDiaryByDateResponse": {
+          "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Diary id",
+                "example": "64d360ea78fe376e4981199f"
+              },
+              "owner": {
+                "type": "string",
+                "description": "Diarys owner",
+                "example": "650773247f9ebd0f46e1a537"
+              },
+              "date": {
+                "type": "string",
+                "description": "Diaries date",
+                "example": "19-09-2023"
+              },
+              "exercises": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "exercise id",
+                      "example": "64d360ea78fe376e4981199f"
+                    },
+                    "bodyPart": {
+                      "type": "string",
+                      "description": "Exercise body part",
+                      "example": "waiste"
+                    },
+                    "equipment": {
+                      "type": "string",
+                      "description": "Exercise equipment",
+                      "example": "barbell"
+                    },
+                    "target": {
+                      "type": "string",
+                      "description": "Exercise target",
+                      "example": "pectorals"
+                    },
+                    "burnedCalories": {
+                      "type": "number",
+                      "description": "Exercise calories/burning",
+                      "example": 357
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Exercise full name",
+                      "example": "barbell guillotine bench press"
+                    },
+                    "time": {
+                      "type": "number",
+                      "description": "Exercise time in minuts",
+                      "example": 3
+                    }
+                  }
+                }
+             
+              },
+              "products": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Product id",
+                      "example": "64d360ea78fe376e4981199f"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Product title",
+                      "example": "marlin"
+                    },
+                    "category": {
+                      "type": "string",
+                      "description": "Product category",
+                      "example": "fish"
+                    },
+                    "calories": {
+                      "type": "number",
+                      "description": "Product calories",
+                      "example": 357
+                    },
+                    "recommend": {
+                      "type": "boolean",
+                      "description": "Is the product recommended for the user with the current blood type",
+                      "example": "false"
+                    },
+                    "amount": {
+                      "type": "number",
+                      "description": "Amount of product consumed",
+                      "example": 300
+                    }
+                  }
+                }
+             
+              }
+            }
+        }, 
+        "AddProductInUsersDiaryRequest": {
+          "type":"object",
+          "required": ["date", "productId", "amount", "calories"],
+          "properties": { 
+            "productId": {
+              "type": "string",
+              "description": "Product id",
+              "example": "5d51694902b2373622ff5b7f"
+            },
+            "date": {
+              "type": "string",
+              "description": "Diaries date",
+              "example": "19-09-2023"
+            },
+            "amount": {
+              "type": "number",
+              "description": "Amount of consumed product in grams",
+              "example": 200
+            },
+            "calories": {
+              "type": "number",
+              "description": "The number of calories in the product consumed by the user",
+              "example": 400
+            }
+          }
+        },
+        "AddProductInUsersDiaryResponse": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Diary id",
+              "example": "64d360ea78fe376e4981199f"
+            },
+            "owner": {
+              "type": "string",
+              "description": "Diarys owner",
+              "example": "650773247f9ebd0f46e1a537"
+            },
+            "date": {
+              "type": "string",
+              "description": "Diaries date",
+              "example": "19-09-2023"
+            },
+            "exercises": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "exercise id",
+                    "example": "64d360ea78fe376e4981199f"
+                  },
+                  "bodyPart": {
+                    "type": "string",
+                    "description": "Exercise body part",
+                    "example": "waiste"
+                  },
+                  "equipment": {
+                    "type": "string",
+                    "description": "Exercise equipment",
+                    "example": "barbell"
+                  },
+                  "target": {
+                    "type": "string",
+                    "description": "Exercise target",
+                    "example": "pectorals"
+                  },
+                  "burnedCalories": {
+                    "type": "number",
+                    "description": "Exercise calories/burning",
+                    "example": 357
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Exercise full name",
+                    "example": "barbell guillotine bench press"
+                  },
+                  "time": {
+                    "type": "number",
+                    "description": "Exercise time in minuts",
+                    "example": 3
+                  }
+                }
+              }
+           
+            },
+            "products": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Product id",
+                    "example": "64d360ea78fe376e4981199f"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Product title",
+                    "example": "marlin"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Product category",
+                    "example": "fish"
+                  },
+                  "calories": {
+                    "type": "number",
+                    "description": "Product calories",
+                    "example": 357
+                  },
+                  "recommend": {
+                    "type": "boolean",
+                    "description": "Is the product recommended for the user with the current blood type",
+                    "example": "false"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "description": "Amount of product consumed",
+                    "example": 300
+                  }
+                }
+              }
+           
+            }
+          }
+        },
+        "AddExerciseInUsersDiaryRequest": {
+          "type":"object",
+          "required": ["date", "exerciseId", "time", "burnedCalories"],
+          "properties": { 
+            "exerciseId": {
+              "type": "string",
+              "description": "Product id",
+              "example": "5d51694902b2373622ff5b7fo"
+            },
+            "date": {
+              "type": "string",
+              "description": "Diaries date",
+              "example": "19-09-2023"
+            },
+            "time": {
+              "type": "number",
+              "description": "Exercise time in seconds",
+              "example": 200
+            },
+            "burnedCalories": {
+              "type": "number",
+              "description": "Number of calories burned",
+              "example": 400
+            }
+          }
+        },
+        "AddExerciseInUsersDiaryResponse": {
+          "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Diary id",
+                "example": "64d360ea78fe376e4981199f"
+              },
+              "owner": {
+                "type": "string",
+                "description": "Diarys owner",
+                "example": "650773247f9ebd0f46e1a537"
+              },
+              "date": {
+                "type": "string",
+                "description": "Diaries date",
+                "example": "19-09-2023"
+              },
+              "exercises": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "exercise id",
+                      "example": "64d360ea78fe376e4981199f"
+                    },
+                    "bodyPart": {
+                      "type": "string",
+                      "description": "Exercise body part",
+                      "example": "waiste"
+                    },
+                    "equipment": {
+                      "type": "string",
+                      "description": "Exercise equipment",
+                      "example": "barbell"
+                    },
+                    "target": {
+                      "type": "string",
+                      "description": "Exercise target",
+                      "example": "pectorals"
+                    },
+                    "burnedCalories": {
+                      "type": "number",
+                      "description": "Exercise calories/burning",
+                      "example": 357
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Exercise full name",
+                      "example": "barbell guillotine bench press"
+                    },
+                    "time": {
+                      "type": "number",
+                      "description": "Exercise time in minuts",
+                      "example": 3
+                    }
+                  }
+                }
+             
+              },
+              "products": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Product id",
+                      "example": "64d360ea78fe376e4981199f"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Product title",
+                      "example": "marlin"
+                    },
+                    "category": {
+                      "type": "string",
+                      "description": "Product category",
+                      "example": "fish"
+                    },
+                    "calories": {
+                      "type": "number",
+                      "description": "Product calories",
+                      "example": 357
+                    },
+                    "recommend": {
+                      "type": "boolean",
+                      "description": "Is the product recommended for the user with the current blood type",
+                      "example": "false"
+                    },
+                    "amount": {
+                      "type": "number",
+                      "description": "Amount of product consumed",
+                      "example": 300
+                    }
+                  }
+                }
+              }
+            }
+        }, 
+        "DeleteExersiseRequest": {
+          "type": "object",
+          "properties": {
+            "exerciseId": {
+                "type": "string",
+                "description": "Task id",
+                "example": "65089a8b1e77419dc4fa2b2e"
+              },
+                "date": {
+                  "type": "string",
+                  "description": "Task date",
+                  "example": "19-09-2023"
+                }
+              } 
+        },
+        "DeleteExersiseResponse": {
+          "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Exersise id",
+                "example": "Exersise {id} deleted successfully"
+              }
+              }
+        },
+        "DeleteProductRequest": {
+              "type": "object",
+              "properties": {
+                "productId": {
+                    "type": "string",
+                    "description": "Product id",
+                    "example": "65089a8b1e77419dc4fa2b2e"
+                  },
+                    "date": {
+                      "type": "string",
+                      "description": "Product date",
+                      "example": "19-09-2023"
+                    }
+                  } 
+        },
+        "DeleteProductResponse": {
+              "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "description": "Product id",
+                    "example": "Product {id} deleted successfully"
+                  }
+                  }
+        },
+        "successfulCreateResponse": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Success message",
+                "example": "User data was created successful"
+              }
+            }
+        },
+        "successfulUpdateResponse": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Success message",
+                "example": "User data was updated successful"
+              }
+            }
+        },
+          
+        "errorBadRequestResponse": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Error message",
+                "example": "This text will describe what is wrong with the request body"
+              }
+            }
+        },
+        "errorConflictResponse": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Error message",
+                "example": "Email has already in use"
+              }
+            }
+        },
+        "errorUnauthorizedResponse": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Error message",
+                "example": "Unauthorized"
+              }
+            }
+        },
+          "errorNotFoundResponse": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Error message",
+                "example": "Not Found"
+              }
+            }
+        },
+        "errorServerResponse": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Error message",
+                "example": "This text will describe what is wrong with the internal server"
+              }
+            }
+        }
+        }
+         
+        }, 
+        
+      "securitySchemes": {
+        "Bearer": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    }
+    
+    
+  
