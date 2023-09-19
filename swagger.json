@@ -397,20 +397,26 @@
           }
         }
       },
-  
       "/api/diary": {
         "get": {
           "tags": ["Diary"],
           "summary": "Get Diary list",
-          "parameters": [],
+          "parameters": [
+            {
+              "type":"string",
+              "name": "date",
+              "example": "19-09-2023",
+              "required": true
+            }
+          ],
           "security": [{ "Bearer": [] }],
           "responses": {
             "200": {
-              "description": "Successful operation, boards list is got",
+              "description": "Successful operation, diaries list is got",
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/GetAllBoardsResponse"
+                    "$ref": "#/components/schemas/GetDiaryByDateResponse"
                   }
                 }
               }
@@ -446,30 +452,32 @@
               }
             }
           }
-        },
+        }          
+      },
+      "/api/diary/add-product": {
         "post": {
           "tags": ["Diary"],
-          "summary": "Add new board",
+          "summary": "Add product in to user diary",
           "parameters": [],
           "security": [{ "Bearer": [] }],
           "requestBody": {
-            "description": "Board's object",
+            "description": "Add product in to user diary",
             "required": true,
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddBoardRequest"
+                  "$ref": "#/components/schemas/AddProductInUsersDiaryRequest"
                 }
               }
             }
           },
           "responses": {
-            "201": {
-              "description": "Successful operation, new board added",
+            "200": {
+              "description": "Successful operation, user  product created",
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/AddBoardResponse"
+                    "$ref": "#/components/schemas/AddProductInUsersDiaryResponse"
                   }
                 }
               }
@@ -517,103 +525,30 @@
           }
         }
       },
-      "/api/products": {
-        "get": {
-          "tags": ["Products"],
-          "summary": "Get Products list",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "recommended",            
-              "example": true,
-              "schema": {
-                "minimum": 1
-              }
-            },
-            {
-              "in": "path",
-              "name": "category",            
-              "example": "fish",
-              "schema": {
-                "minimum": 1
-              }
-            },
-            {
-              "in": "path",
-              "name": "title",            
-              "example": "marlin",
-              "schema": {
-                "minimum": 1
-              }
-            }
-          ],
-          "security": [{ "Bearer": [] }],
-          "responses": {
-            "200": {
-              "description": "Successful operation, products list is got",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/GetAllProductsResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        },
+      "/api/diary/add-exercise": {
         "post": {
           "tags": ["Diary"],
-          "summary": "Add new board",
+          "summary": "Add exercise in to user diary",
           "parameters": [],
           "security": [{ "Bearer": [] }],
           "requestBody": {
-            "description": "Board's object",
+            "description": "Add prodexercise in to user diary",
             "required": true,
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddBoardRequest"
+                  "$ref": "#/components/schemas/AddExerciseInUsersDiaryRequest"
                 }
               }
             }
           },
           "responses": {
-            "201": {
-              "description": "Successful operation, new board added",
+            "200": {
+              "description": "Successful operation, user exercise created",
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/AddBoardResponse"
+                    "$ref": "#/components/schemas/AddExerciseInUsersDiaryResponse"
                   }
                 }
               }
@@ -661,104 +596,30 @@
           }
         }
       },
-      "/api/exercises": {
-        "get": {
-          "tags": ["Exercises"],
-          "summary": "Get Exercises list",
-          "parameters": [
-            {
-              "in": "path",
-              "name": "filter",
-              "enum": ["Body parts", "Equipment", "Muscles"],            
-              "example": "Body parts",
-              "schema": {
-                "minimum": 1
-              }
-            },
-            {
-              "in": "path",
-              "name": "equipment",            
-              "example": "body weight",
-              "schema": {
-                "minimum": 1
-              }
-            },
-            {
-              "in": "path",
-              "name": "keyword",            
-              "example": "marlin",
-              "schema": {
-                "minimum": 1
-              }
-            }
-          ],
-          "security": [{ "Bearer": [] }],
-          "responses": {
-            "200": {
-              "description": "Successful operation, products list is got",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/GetAllProductsResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "post": {
+      "/api/diary/delete-exercise": {
+        "delete": {
           "tags": ["Diary"],
-          "summary": "Add new board",
+          "summary": "Add exercise in to user diary",
           "parameters": [],
           "security": [{ "Bearer": [] }],
           "requestBody": {
-            "description": "Board's object",
+            "description": "Add prodexercise in to user diary",
             "required": true,
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddBoardRequest"
+                  "$ref": "#/components/schemas/AddExerciseInUsersDiaryRequest"
                 }
               }
             }
           },
           "responses": {
-            "201": {
-              "description": "Successful operation, new board added",
+            "200": {
+              "description": "Successful operation, user exercise created",
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/AddBoardResponse"
+                    "$ref": "#/components/schemas/AddExerciseInUsersDiaryResponse"
                   }
                 }
               }
@@ -1331,158 +1192,414 @@
             }
           }
         },
-        "GetBoardByIdResponse": {
+        "GetAllExercisesResponse": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "exercise id",
+                "example": "64d360ea78fe376e4981199f"
+              },
+              "bodyPart": {
+                "type": "string",
+                "description": "Exercise body part",
+                "example": "waiste"
+              },
+              "equipment": {
+                "type": "string",
+                "description": "Exercise equipment",
+                "example": "barbell"
+              },
+              "target": {
+                "type": "string",
+                "description": "Exercise target",
+                "example": "pectorals"
+              },
+              "gifUrl": {
+                "type": "string",
+                "description": "Example of an exercise ",
+                "example": "https://res.cloudinary.com/ditdqzoio/image/upload/v1687127066/exercises/0045.gif"
+              },
+              "burnedCalories": {
+                "type": "number",
+                "description": "Exercise calories/burning",
+                "example": 357
+              },
+              "name": {
+                "type": "string",
+                "description": "Exercise full name",
+                "example": "barbell guillotine bench press"
+              },
+              "time": {
+                "type": "number",
+                "description": "Exercise time in minuts",
+                "example": 3
+              }
+            }
+          }
+        },
+        "GetDiaryByDateResponse": {
+          "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Diary id",
+                "example": "64d360ea78fe376e4981199f"
+              },
+              "owner": {
+                "type": "string",
+                "description": "Diarys owner",
+                "example": "650773247f9ebd0f46e1a537"
+              },
+              "date": {
+                "type": "string",
+                "description": "Diaries date",
+                "example": "19-09-2023"
+              },
+              "exercises": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "exercise id",
+                      "example": "64d360ea78fe376e4981199f"
+                    },
+                    "bodyPart": {
+                      "type": "string",
+                      "description": "Exercise body part",
+                      "example": "waiste"
+                    },
+                    "equipment": {
+                      "type": "string",
+                      "description": "Exercise equipment",
+                      "example": "barbell"
+                    },
+                    "target": {
+                      "type": "string",
+                      "description": "Exercise target",
+                      "example": "pectorals"
+                    },
+                    "burnedCalories": {
+                      "type": "number",
+                      "description": "Exercise calories/burning",
+                      "example": 357
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Exercise full name",
+                      "example": "barbell guillotine bench press"
+                    },
+                    "time": {
+                      "type": "number",
+                      "description": "Exercise time in minuts",
+                      "example": 3
+                    }
+                  }
+                }
+             
+              },
+              "products": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Product id",
+                      "example": "64d360ea78fe376e4981199f"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Product title",
+                      "example": "marlin"
+                    },
+                    "category": {
+                      "type": "string",
+                      "description": "Product category",
+                      "example": "fish"
+                    },
+                    "calories": {
+                      "type": "number",
+                      "description": "Product calories",
+                      "example": 357
+                    },
+                    "recommend": {
+                      "type": "boolean",
+                      "description": "Is the product recommended for the user with the current blood type",
+                      "example": "false"
+                    },
+                    "amount": {
+                      "type": "number",
+                      "description": "Amount of product consumed",
+                      "example": 300
+                    }
+                  }
+                }
+             
+              }
+            }
+        }, 
+        "AddProductInUsersDiaryRequest": {
+          "type":"object",
+          "required": ["date", "productId", "amount", "calories"],
+          "properties": { 
+            "productId": {
+              "type": "string",
+              "description": "Product id",
+              "example": "5d51694902b2373622ff5b7f"
+            },
+            "date": {
+              "type": "string",
+              "description": "Diaries date",
+              "example": "19-09-2023"
+            },
+            "amount": {
+              "type": "number",
+              "description": "Amount of consumed product in grams",
+              "example": 200
+            },
+            "calories": {
+              "type": "number",
+              "description": "The number of calories in the product consumed by the user",
+              "example": 400
+            }
+          }
+        },
+        "AddProductInUsersDiaryResponse": {
           "type": "object",
           "properties": {
             "_id": {
               "type": "string",
-              "description": "Board id",
+              "description": "Diary id",
               "example": "64d360ea78fe376e4981199f"
             },
-            "title": {
-              "type": "string",
-              "description": "Board's title",
-              "example": "First Board"
-            },
-            "icon": {
-              "type": "string",
-              "description": "Board's icon",
-              "enum": [
-                "icon-colors",
-                "icon-container",
-                "icon-hexagon",
-                "icon-lightning",
-                "icon-loading",
-                "icon-project",
-                "icon-star",
-                "icon-puzzle-piece"
-              ],
-              "example": "icon-hexagon"
-            },
-            "background": {
-              "type": "string",
-              "description": "Board's background",
-              "enum": [
-                "airBalloon",
-                "blue",
-                "cappadocia",
-                "flowers",
-                "gorge",
-                "greens",
-                "moon",
-                "mountains",
-                "rocksAndSea",
-                "sea",
-                "semiMoon",
-                "trailer",
-                "tree",
-                "yacht",
-                "violetSphere",
-                "default"
-              ],
-              "example": "greens"
-            },
-            "columnOrder": {
-              "type": "array",
-              "description": "Column order",
-              "example": ["64d52e77846f3f325f35b8f0"]
-            },
             "owner": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "description": "User's name",
-                  "example": "Mango"
-                },
-                "email": {
-                  "type": "string",
-                  "description": "User's email",
-                  "format": "email",
-                  "example": "mango@email.com"
-                },
-  
-                "avatarURL": {
-                  "type": "string",
-                  "description": "User's avatar",
-                  "example": ""
-                },
-                "createdAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "example": "2023-08-09T18:30:47.840Z"
-                },
-                "updatedAt": {
-                  "type": "string",
-                  "format": "date-time",
-                  "example": "2023-08-09T18:31:22.235Z"
+              "type": "string",
+              "description": "Diarys owner",
+              "example": "650773247f9ebd0f46e1a537"
+            },
+            "date": {
+              "type": "string",
+              "description": "Diaries date",
+              "example": "19-09-2023"
+            },
+            "exercises": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "exercise id",
+                    "example": "64d360ea78fe376e4981199f"
+                  },
+                  "bodyPart": {
+                    "type": "string",
+                    "description": "Exercise body part",
+                    "example": "waiste"
+                  },
+                  "equipment": {
+                    "type": "string",
+                    "description": "Exercise equipment",
+                    "example": "barbell"
+                  },
+                  "target": {
+                    "type": "string",
+                    "description": "Exercise target",
+                    "example": "pectorals"
+                  },
+                  "burnedCalories": {
+                    "type": "number",
+                    "description": "Exercise calories/burning",
+                    "example": 357
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Exercise full name",
+                    "example": "barbell guillotine bench press"
+                  },
+                  "time": {
+                    "type": "number",
+                    "description": "Exercise time in minuts",
+                    "example": 3
+                  }
                 }
               }
+           
             },
-            "columns": {
+            "products": {
               "type": "array",
-              "description": "Columns",
-              "example": [
-                {
-                  "_id": "64d5585cf10982f0832226f4",
-                  "title": "2222222",
-                  "board": "64d52e77846f3f325f35b8f0",
-                  "taskOrder": [
-                    "64d8907409b4e55ec6255990",
-                    "64d8907809b4e55ec6255994",
-                    "64d8901109b4e55ec6255983",
-                    "64d88e0d09b4e55ec625596c"
-                  ],
-                  "createdAt": "2023-08-10T21:36:28.801Z",
-                  "updatedAt": "2023-08-13T08:13:04.104Z",
-                  "tasks": [
-                    {
-                      "_id": "64d8901109b4e55ec6255983",
-                      "title": "Task 1",
-                      "description": "This is the description of task 1",
-                      "priority": "without",
-                      "deadline": null,
-                      "column": "64d5585cf10982f0832226f4",
-                      "createdAt": "2023-08-13T08:10:57.245Z",
-                      "updatedAt": "2023-08-13T08:13:04.154Z"
-                    },
-                    {
-                      "_id": "64d8907409b4e55ec6255990",
-                      "title": "Task 2",
-                      "description": "This is the description of task 2",
-                      "priority": "low",
-                      "deadline": "21/12/2022",
-                      "column": "64d5585cf10982f0832226f4",
-                      "createdAt": "2023-08-13T08:12:36.110Z",
-                      "updatedAt": "2023-08-13T08:12:36.110Z"
-                    },
-                    {
-                      "_id": "64d88e0d09b4e55ec625596c",
-                      "title": "Task 3",
-                      "description": "This is the description of task 3",
-                      "priority": "medium",
-                      "deadline": "13/04/2023",
-                      "column": "64d5585cf10982f0832226f4",
-                      "createdAt": "2023-08-13T08:12:40.524Z",
-                      "updatedAt": "2023-08-13T08:12:40.524Z"
-                    },
-                    {
-                      "_id": "64d8907809b4e55ec6255994",
-                      "title": "Task 4",
-                      "description": "This is the description of task 4",
-                      "priority": "high",
-                      "deadline": null,
-                      "column": "64d5585cf10982f0832226f4",
-                      "createdAt": "2023-08-13T08:12:40.524Z",
-                      "updatedAt": "2023-08-13T08:12:40.524Z"
-                    }
-                  ]
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Product id",
+                    "example": "64d360ea78fe376e4981199f"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Product title",
+                    "example": "marlin"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Product category",
+                    "example": "fish"
+                  },
+                  "calories": {
+                    "type": "number",
+                    "description": "Product calories",
+                    "example": 357
+                  },
+                  "recommend": {
+                    "type": "boolean",
+                    "description": "Is the product recommended for the user with the current blood type",
+                    "example": "false"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "description": "Amount of product consumed",
+                    "example": 300
+                  }
                 }
-              ]
+              }
+           
             }
           }
         },
-  
+        "AddExerciseInUsersDiaryRequest": {
+          "type":"object",
+          "required": ["date", "exerciseId", "time", "burnedCalories"],
+          "properties": { 
+            "exerciseId": {
+              "type": "string",
+              "description": "Product id",
+              "example": "5d51694902b2373622ff5b7fo"
+            },
+            "date": {
+              "type": "string",
+              "description": "Diaries date",
+              "example": "19-09-2023"
+            },
+            "time": {
+              "type": "number",
+              "description": "Exercise time in seconds",
+              "example": 200
+            },
+            "burnedCalories": {
+              "type": "number",
+              "description": "Number of calories burned",
+              "example": 400
+            }
+          }
+        },
+        "AddExerciseInUsersDiaryResponse": {
+          "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Diary id",
+                "example": "64d360ea78fe376e4981199f"
+              },
+              "owner": {
+                "type": "string",
+                "description": "Diarys owner",
+                "example": "650773247f9ebd0f46e1a537"
+              },
+              "date": {
+                "type": "string",
+                "description": "Diaries date",
+                "example": "19-09-2023"
+              },
+              "exercises": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "exercise id",
+                      "example": "64d360ea78fe376e4981199f"
+                    },
+                    "bodyPart": {
+                      "type": "string",
+                      "description": "Exercise body part",
+                      "example": "waiste"
+                    },
+                    "equipment": {
+                      "type": "string",
+                      "description": "Exercise equipment",
+                      "example": "barbell"
+                    },
+                    "target": {
+                      "type": "string",
+                      "description": "Exercise target",
+                      "example": "pectorals"
+                    },
+                    "burnedCalories": {
+                      "type": "number",
+                      "description": "Exercise calories/burning",
+                      "example": 357
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Exercise full name",
+                      "example": "barbell guillotine bench press"
+                    },
+                    "time": {
+                      "type": "number",
+                      "description": "Exercise time in minuts",
+                      "example": 3
+                    }
+                  }
+                }
+             
+              },
+              "products": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Product id",
+                      "example": "64d360ea78fe376e4981199f"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Product title",
+                      "example": "marlin"
+                    },
+                    "category": {
+                      "type": "string",
+                      "description": "Product category",
+                      "example": "fish"
+                    },
+                    "calories": {
+                      "type": "number",
+                      "description": "Product calories",
+                      "example": 357
+                    },
+                    "recommend": {
+                      "type": "boolean",
+                      "description": "Is the product recommended for the user with the current blood type",
+                      "example": "false"
+                    },
+                    "amount": {
+                      "type": "number",
+                      "description": "Amount of product consumed",
+                      "example": 300
+                    }
+                  }
+                }
+              }
+            }
+        }, 
         "DeleteTaskResponse": {
           "type": "object",
           "properties": {
@@ -1600,6 +1717,7 @@
             }
           }
         }
+        }
       },
       "securitySchemes": {
         "Bearer": {
@@ -1609,4 +1727,4 @@
         }
       }
     }
-  }
+  

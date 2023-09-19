@@ -8,7 +8,7 @@ const getDiary = async (req, res) => {
 
   const result = await Diary.findOne(
     { owner, ...req.body },
-    "-createdAt -updatedAt",
+    "-createdAt -updatedAt" ,
     {
       skip,
       limit,

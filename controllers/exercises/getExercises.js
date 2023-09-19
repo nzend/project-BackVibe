@@ -6,7 +6,7 @@ const getExercises = async (req, res) => {
   console.log("REQ", req.query);
 
   const result = await Exercise.find({...req.query}, "-createdAt -updatedAt").skip(skip)
-  .limit(limit);;
+  .limit(limit);
   console.log("RES LENGTH",result.length);
  
 

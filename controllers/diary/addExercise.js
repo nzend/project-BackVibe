@@ -4,7 +4,7 @@ const { Exercise } = require('../../models');
 
 const addExercise = async (req, res) => {
   const { _id: owner } = req.user;
-  const { date, exerciseId, time, calories } = req.body;
+  const { date, exerciseId, time, burnedCalories } = req.body;
 
   const exercise = await Exercise.findOne(
     { _id: exerciseId },
@@ -17,7 +17,7 @@ const addExercise = async (req, res) => {
     equipment: exercise.equipment,
     target: exercise.target,
     time,
-    calories,
+    burnedCalories,
   };
 
   try {
