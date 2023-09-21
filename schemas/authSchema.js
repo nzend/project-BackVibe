@@ -56,7 +56,7 @@ const userBodySchema = Joi.object({
     "number.min": "Desired weight must be greater than or equal to 35",
     "any.required": "Desired weight is a required field",
   }),
-  birthday: Joi.date().max(maxDate).iso().required().messages({
+  birthday: Joi.date().max(maxDate).required().messages({
     "date.format": "Please enter a valid date 'YYYY-mm-dd' ",
     "date.max": "You must be 18 years old",
     "any.required": "Date is a required field",
@@ -102,7 +102,7 @@ const updateSchema = Joi.object({
     "number.min": "Desired weight must be greater than or equal to 35",
     "any.required": "Desired weight is a required field",
   }),
-  birthday: Joi.date().max(maxDate).iso().required().messages({
+  birthday: Joi.date().max(maxDate).required().messages({
     "date.format": "Please enter a valid date 'YYYY-mm-dd' ",
     "date.max": "You must be 18 years old",
     "any.required": "Date is a required field",
