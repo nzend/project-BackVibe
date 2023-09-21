@@ -4,7 +4,7 @@ const { Product } = require("../../models");
 
 const getAllProducts = async (req, res) => {
   console.log("REQ", req.query);
-  const { page = 1, limit = 10, recommended,  category, title } = req.query;
+  const { page = 1, limit = 20, recommended,  category, title } = req.query;
 
   const {blood} = req.user.bodyParameters
 
