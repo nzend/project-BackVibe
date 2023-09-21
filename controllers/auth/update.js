@@ -2,7 +2,6 @@ const calculateCalories = require("../../helpers/calculateCalories");
 const { User } = require("../../models");
 
 const update = async (req, res) => {
-  const avatarURL = req.file ? req.file.path : "";
   const {
     name,
     height,
@@ -18,7 +17,6 @@ const update = async (req, res) => {
   const dailyTime = 110;
   const userData = {
     name,
-    avatarURL,
     dailyTime,
     dailyСalories,
     bodyParameters: {
@@ -31,6 +29,10 @@ const update = async (req, res) => {
       levelActivity,
     },
   };
+
+  if (req.file) {
+    userData.avatarURL = req.file.path;
+  }
 
   const updatedUser = await User.findByIdAndUpdate(req.user._id, userData, {
     new: true,

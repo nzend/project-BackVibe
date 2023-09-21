@@ -10,7 +10,7 @@ const calculateCalories = (data) => {
   const number = sex == "male" ? 5 : -161;
   const years = new Date().getFullYear() - new Date(birthday).getFullYear();
 
-  return (
+  return Math.round(
     (10 * desiredWeight + 6, 25 * height - 5 * years + number) *
     lifestyleFactor[levelActivity]
   );
