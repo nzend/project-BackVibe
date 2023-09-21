@@ -12,6 +12,12 @@ const diarySchema = new Schema(
       type: String,
       required: true,
     },
+    burnedCalories: {
+      type: Number,
+    },
+    consumedCalories: {
+      type: Number,
+    },
 
     products: [
       {

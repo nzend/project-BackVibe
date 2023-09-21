@@ -13,7 +13,7 @@ const getDiary = async (req, res) => {
     {
       skip,
       limit,
-    }
+    }, 
   );
   if (Object.keys(req.query).length < 1) {
     throw HttpError(404, "Not Found, enter the date!");
@@ -21,8 +21,25 @@ const getDiary = async (req, res) => {
   if (!result) {
     throw HttpError(404, "There are no entries in the diary for this date");
   }
-
-  res.json(result);
+ 
+  const burnedCalories = result.exercises.map(item => item.burnedCalories).reduce((previousValue, burnedCalories) => {
+    return previousValue + burnedCalories;
+  }, 0);;
+  const consumedCalories = result.products.map(item => item.calories).reduce((previousValue, consumedCalories) => {
+    return previousValue + consumedCalories;
+  }, 0);
+  console.log("RESULT:",result);
+  const updateResult = {
+  _id: result._id,
+  owner: result.owner,
+  date: result.date,
+  burnedCalories,
+  consumedCalories,
+  exercises : [...result.exercises],
+  products: [result.products]
+  }
+ 
+  res.json(updateResult);
 };
 
 module.exports = getDiary;
