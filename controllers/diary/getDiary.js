@@ -40,7 +40,7 @@ const getDiary = async (req, res) => {
   consumedCalories,
   doneExercisesTime,
   exercises : [...result.exercises],
-  products: [result.products]
+  products: [...result.products]
   }
  
   res.json(updateResult);
