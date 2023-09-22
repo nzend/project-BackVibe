@@ -28,6 +28,9 @@ const getDiary = async (req, res) => {
   const consumedCalories = result.products.map(item => item.calories).reduce((previousValue, consumedCalories) => {
     return previousValue + consumedCalories;
   }, 0);
+  const doneExercisesTime = result.exercises.map(item => item.time).reduce((previousValue, exerciseTime) => {
+    return previousValue + exerciseTime;
+  }, 0);
   console.log("RESULT:",result);
   const updateResult = {
   _id: result._id,
@@ -35,6 +38,7 @@ const getDiary = async (req, res) => {
   date: result.date,
   burnedCalories,
   consumedCalories,
+  doneExercisesTime,
   exercises : [...result.exercises],
   products: [result.products]
   }
