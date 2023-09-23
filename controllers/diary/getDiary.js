@@ -25,7 +25,7 @@ const getDiary = async (req, res) => {
   const burnedCalories = result.exercises.map(item => item.burnedCalories).reduce((previousValue, burnedCalories) => {
     return previousValue + burnedCalories;
   }, 0);;
-  const consumedCalories = result.products.map(item => item.weight).reduce((previousValue, consumedCalories) => {
+  const consumedCalories = result.products.map(item => item.calories).reduce((previousValue, consumedCalories) => {
     return previousValue + consumedCalories;
   }, 0);
   const doneExercisesTime = result.exercises.map(item => item.time).reduce((previousValue, exerciseTime) => {
