@@ -19,7 +19,7 @@ const getDiary = async (req, res) => {
     throw HttpError(404, "Not Found, enter the date!");
   }
   if (!result) {
-    throw HttpError(404, "There are no entries in the diary for this date");
+    throw HttpError(204, "There are no entries in the diary for this date");
   }
  
   const burnedCalories = result.exercises.map(item => item.burnedCalories).reduce((previousValue, burnedCalories) => {
