@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
   const user = await User.findOne({ email });
   if (user) {
     throw HttpError(409, "Email already in use");
@@ -22,7 +22,9 @@ const register = async (req, res) => {
   await User.findByIdAndUpdate(newUser._id, { token });
 
   res.status(201).json({
+    email,
     token,
+    name,
   });
 };
 
