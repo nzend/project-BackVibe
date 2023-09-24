@@ -4,6 +4,7 @@ const ctrlExercises = require('./exercises');
 const ctrlFilter = require('./filter');
 const ctrlProducts = require('./products');
 const ctrlCategories = require('./productsCategories');
+const ctrlAssets = require('./assets')
 
 module.exports = {
   ctrlAuth,
@@ -11,5 +12,6 @@ module.exports = {
   ctrlFilter,
   ctrlProducts,
   ctrlDiary,
-  ctrlCategories
+  ctrlCategories,
+  ctrlAssets
 };

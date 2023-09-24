@@ -8,7 +8,7 @@ const swaggerDocument = require('./swagger.json');
 
 // Іменований імпорт роутів
 
-const { authRouter, exercisesRouter, filterRouter, productsRouter, diaryRouter, categoriesRouter  } = require('./routes/api');
+const { authRouter, exercisesRouter, filterRouter, productsRouter, diaryRouter, categoriesRouter, assetsRouter  } = require('./routes/api');
 // ___________________________________
 
 // Тут нічого не чіпаємо!!!!
@@ -31,6 +31,7 @@ app.use('/api/filter', filterRouter);
 app.use("/api/users", authRouter);
 app.use('/api/diary', diaryRouter);
 app.use('/api/categories', categoriesRouter);
+app.use('/api/assets', assetsRouter);
 
 // _____________________________________________
 
