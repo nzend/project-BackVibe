@@ -45,6 +45,7 @@
           "tags": ["Users"],
           "summary": "User registration",
           "parameters": [],
+          
           "requestBody": {
             "description": "Registration's object",
             "required": true,
@@ -115,6 +116,7 @@
           "tags": ["Users"],
           "summary": "User login",
           "parameters": [],
+          "security": [{ "Bearer": [] }],
           "requestBody": {
             "description": "Login's object",
             "required": true,
@@ -2126,17 +2128,17 @@
               }
             }
         }
+        },
+        "securitySchemes": {
+          "Bearer": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT"
+          }
         }
-         
-        }, 
+        } 
         
-      "securitySchemes": {
-        "Bearer": {
-          "type": "http",
-          "scheme": "bearer",
-          "bearerFormat": "JWT"
-        }
-      }
+     
     }
     
     
