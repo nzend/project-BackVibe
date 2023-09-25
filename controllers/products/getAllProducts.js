@@ -1,10 +1,10 @@
 
 
-const { regExp } = require("../../constants");
+
 const { Product } = require("../../models");
 
 const getAllProducts = async (req, res) => {
-  console.log("REQ", req.query);
+ 
   const { page = 1, limit = 20, recommended,  category, title } = req.query;
 
   const {blood} = req.user.bodyParameters
@@ -43,7 +43,7 @@ const getAllProducts = async (req, res) => {
   const result = await Product.find(filter, "-createdAt -updatedAt")
     .skip(skip)
     .limit(limit);
-
+ 
     const updateResult = result.map((product) => {
       const newItem =  {
         id: product._id,
@@ -55,6 +55,7 @@ const getAllProducts = async (req, res) => {
         }
         return newItem ; 
     })
+
 
   res.json(updateResult);
 };
