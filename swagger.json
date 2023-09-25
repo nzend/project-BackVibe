@@ -1044,7 +1044,7 @@
             "password": {
               "type": "string",
               "description": "User's password. It must contain only Latin letters; may contain numbers, signs, letters in different case; does not contain a space.",
-              "example": "Mango12378"
+              "example": "mangoose12378"
             }
           }
         },
@@ -1056,15 +1056,15 @@
               "description": "User's token",
               "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDU3YWUxNjQ1OTIxYTA2MDFhYmY2YyIsImlhdCI6MTY5NDg1Nzk1MywiZXhwIjoxNjk0OTQwNzUzfQ.seYxxZquM5Sw6P1gKXGgKog2oWPh5mJClN0c1Bf2x38"
             },
-            "createdAt": {
+            "name": {
               "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:30:47.840Z"
+              
+              "example": "Mango"
             },
-            "updatedAt": {
+            "email": {
               "type": "string",
-              "format": "date-time",
-              "example": "2023-08-09T18:31:22.235Z"
+              
+              "example": "mango@gmail.com"
             }
           }
         },
@@ -1082,7 +1082,7 @@
             "password": {
               "type": "string",
               "description": "User's password. It must contain only Latin letters, at least one uppercase, lowercase letter and a number; does not contain a space",
-              "example": "Mango12378"
+              "example": "mangoose12378"
             }
           }
         },
@@ -1507,30 +1507,10 @@
                 "description": "Product`s category",
                 "example": "cereals"
               },
-              "groupBloodNotAllowed": {
-                "type": "object",
-                "properties": {
-                  "1": {
-                    "type": "boolean",
-                    "description": "User's blood",
-                    "example": true
-                  },
-                  "2": {
-                    "type": "boolean",
-                    "description": "User's blood",
-                    "example": true
-                  },
-                  "3": {
-                    "type": "boolean",
-                    "description": "User's blood",
-                    "example": true
-                  },
-                  "4": {
-                    "type": "boolean",
-                    "description": "User's blood",
-                    "example": false
-                  }
-                }
+              "recommended": {
+                "type": "boolean",
+                "description": "Product`s is recommended or not ",
+                "example": true
               }
             }
           }
@@ -1667,6 +1647,21 @@
                 "type": "string",
                 "description": "Diaries date",
                 "example": "19-09-2023"
+              },
+              "burnedCalories": {
+                "type": "number",
+                "description": "burned calories this day",
+                "example": 300
+              },
+              "consumedCalories": {
+                "type": "number",
+                "description": "consumed calories this day",
+                "example": 300
+              },
+              "doneExercisesTime": {
+                "type": "number",
+                "description": "done exercises time this day",
+                "example": 300
               },
               "exercises": {
                 "type": "array",
