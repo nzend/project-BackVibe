@@ -1,10 +1,11 @@
-const ctrlAuth = require('./auth');
-const ctrlDiary = require('./diary');
-const ctrlExercises = require('./exercises');
-const ctrlFilter = require('./filter');
-const ctrlProducts = require('./products');
-const ctrlCategories = require('./productsCategories');
-const ctrlAssets = require('./assets')
+const ctrlAuth = require("./auth");
+const ctrlDiary = require("./diary");
+const ctrlExercises = require("./exercises");
+const ctrlFilter = require("./filter");
+const ctrlProducts = require("./products");
+const ctrlCategories = require("./productsCategories");
+const ctrlAssets = require("./assets");
+const ctrlStatistics = require("./statistics");
 
 module.exports = {
   ctrlAuth,
@@ -13,5 +14,6 @@ module.exports = {
   ctrlProducts,
   ctrlDiary,
   ctrlCategories,
-  ctrlAssets
+  ctrlAssets,
+  ctrlStatistics,
 };
