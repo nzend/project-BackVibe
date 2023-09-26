@@ -1,18 +1,27 @@
-const express = require('express');
-const logger = require('morgan');
-const cors = require('cors');
+const express = require("express");
+const logger = require("morgan");
+const cors = require("cors");
 const app = express();
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 
 // Іменований імпорт роутів
 
-const { authRouter, exercisesRouter, filterRouter, productsRouter, diaryRouter, categoriesRouter, assetsRouter  } = require('./routes/api');
+const {
+  authRouter,
+  exercisesRouter,
+  filterRouter,
+  productsRouter,
+  diaryRouter,
+  categoriesRouter,
+  assetsRouter,
+  statisticsRouter,
+} = require("./routes/api");
 // ___________________________________
 
 // Тут нічого не чіпаємо!!!!
-const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
+const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
 app.use(cors());
@@ -25,22 +34,23 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // __________________________________
 
 // Місце для роутів
-app.use('/api/products', productsRouter);
-app.use('/api/exercises', exercisesRouter);
-app.use('/api/filter', filterRouter);
+app.use("/api/products", productsRouter);
+app.use("/api/exercises", exercisesRouter);
+app.use("/api/filter", filterRouter);
 app.use("/api/users", authRouter);
-app.use('/api/diary', diaryRouter);
-app.use('/api/categories', categoriesRouter);
-app.use('/api/assets', assetsRouter);
+app.use("/api/diary", diaryRouter);
+app.use("/api/categories", categoriesRouter);
+app.use("/api/assets", assetsRouter);
+app.use("/api/statistics", statisticsRouter);
 
 // _____________________________________________
 
 app.use((req, res) => {
-  res.status(404).json({ message: 'Not Found' });
+  res.status(404).json({ message: "Not Found" });
 });
 
 app.use((err, req, res, next) => {
-  const { status = 500, message = 'Server error' } = err;
+  const { status = 500, message = "Server error" } = err;
   res.status(status).json({ message });
 });
 
