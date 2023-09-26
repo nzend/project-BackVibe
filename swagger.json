@@ -1403,7 +1403,13 @@
               "description": "User's name. It must contain only Latin letters; may contain numbers, signs, letters in different case",
               "example": "Mango"
             },
-          
+            "avatarURL": { 
+              "type": "file", 
+              "content": "img/png",
+              "format": "binary",
+              "description": "User's avatar",
+              "example": "avatar.jpg"
+            },
             "height": {
               "type": "number",
               "description": "User's height",
