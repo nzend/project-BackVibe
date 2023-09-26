@@ -614,19 +614,23 @@
         "delete": {
           "tags": ["Diary"],
           "summary": "Delete exersise by date and id",
-          "parameters": [],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "Delete exersise by date and id",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DeleteExersiseRequest"
-                }
-              }
+          "parameters": [
+            {
+              "in": "query",
+              "name": "date",
+              "required": true,
+              "description": "The date when exercise was deleted",
+              "example": "19-09-2023"
+            },
+            {
+              "in": "query",
+              "name": "exerciseId",
+              "required": true,
+              "description": "Exercise-id that delete",
+              "example": "5d51694902b2373622ff5b7fo"
             }
-          },
+            ],
+          "security": [{ "Bearer": [] }],
           "responses": {
             "200": {
               "description": "Successful operation, exersise was deleted",
@@ -685,19 +689,24 @@
         "delete": {
           "tags": ["Diary"],
           "summary": "Delete product by date and id",
-          "parameters": [],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "Delete product by date and id",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DeleteProductRequest"
-                }
-              }
+          "parameters": [
+            {
+              "in": "query",
+              "name": "date",
+              "required": true,
+              "description": "The date when product delete",
+              "example": "19-09-2023"
+            },
+            {
+              "in": "query",
+              "name": "productId",
+              "required": true,
+              "description": "productId",
+              "example": "5d51694902b2373622ff5b7fo"
             }
-          },
+            ],
+          "security": [{ "Bearer": [] }],
+         
           "responses": {
             "200": {
               "description": "Successful operation, exersise was deleted",
@@ -758,31 +767,34 @@
           "summary": "Get Products list",
           "parameters": [
             {
+              "in": "query",
               "name": "page",
               "type":"number",
               "example": 1
-             
             },
             {
+              "in": "query",
               "name": "limit",
               "type":"string",
-              
               "example": 10
               
             },
             {
+              "in": "query",
               "name": "recommended",
               "type":"boolean",
               "example": true
              
             }, 
             {
+              "in": "query",
               "name": "category",
               "type":"string",          
               "example": "fish"
              
             }, 
             {
+              "in": "query",
               "name": "title",
               "type":"string",       
               "example": "marlin"
@@ -839,36 +851,53 @@
           "tags": ["Exercises"],
           "summary": "Get Exercises list",
           "parameters": [
-            {
+            { 
+              "in": "query",
               "name": "page",
               "type":"number",
               "example": 1
             },
-            {
+            { 
+              "in": "query",
               "name": "limit",
               "type":"string",
               "example": 10
-              
             },
-            {
+            {  
+              "in": "query",
               "name": "bodyPart",
               "type":"string",
+              "schema": {
+                "type": "string",
+                "enum": ["back", "cardio", "chest", "lower arms", "lower legs", "neck", "shoulders", "upper arms", "upper legs", "waist"]
+              },
               "example": "waist"
              
             }, 
             {
+              "in": "query",
               "name": "equipment",
-              "type":"string",          
+              "type":"string", 
+              "schema": {
+                "type": "string",
+                "enum": ["assisted", "band", "barbell", "body weight", "bosu ball", "cable", "dumbbell", "elliptical machine", "ez barbell", "hammer", "kettlebell", "leverage machine", "medicine ball", "olympic barbell", "resistance band", "roller", "rope", "skierg machine", "sled machine", "smith machine", "stability ball", "stationary bike", "stepmill machine", "tire", "trap bar", "upper body ergometer", "weighted", "wheel roller" ]
+              },         
               "example": "body weight"
              
             }, 
             {
+              "in": "query",
               "name": "target",
-              "type":"string",       
+              "type":"string",
+              "schema": {
+                "type": "string",
+                "enum": ["abductors", "abs", "adductors", "biceps", "calves", "cardiovascular system", "delts", "forearms", "glutes", "hamstrings", "lats", "levator scapulae", "pectorals", "quads", "serratus anterior", "spine", "traps", "triceps", "upper back" ]
+              },       
               "example": "abs"
           
             },
             {
+              "in": "query",
               "name": "_id",
               "type":"string",       
               "example": "650493ba8502d2cfefa1a44d"
@@ -927,8 +956,13 @@
           "enum": ["Body parts", "Equipment", "Muscles"],
           "parameters": [
             {
+              "in": "query",
               "name": "filter",
               "type":"string",
+              "schema": {
+                "type": "string",
+                "enum": ["Body parts", "Equipment", "Muscles"]
+              },
               "example": "Body parts"
              
             }
@@ -2000,28 +2034,13 @@
               }
             }
         }, 
-        "DeleteExersiseRequest": {
-          "type": "object",
-          "properties": {
-            "exerciseId": {
-                "type": "string",
-                "description": "Task id",
-                "example": "65089a8b1e77419dc4fa2b2e"
-              },
-                "date": {
-                  "type": "string",
-                  "description": "Task date",
-                  "example": "19-09-2023"
-                }
-              } 
-        },
         "DeleteExersiseResponse": {
           "type": "object",
             "properties": {
               "message": {
                 "type": "string",
                 "description": "Exersise id",
-                "example": "Exersise {id} deleted successfully"
+                "example": "Exercise deleted successfully"
               }
               }
         },
