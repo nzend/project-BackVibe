@@ -8,8 +8,8 @@ const getStatistics = async (req, res) => {
   const exercisesArr = await Diary.aggregate([{ $unwind: "$exercises" }]);
   const training = exercisesArr.reduce(
     (acc, current) => {
-      acc.time = acc.time + current.exercises.time;
-      acc.calories = acc.calories + current.exercises.burnedCalories;
+      acc.time += current.exercises.time;
+      acc.calories += current.exercises.burnedCalories;
       return acc;
     },
     { time: 0, calories: 0 }
