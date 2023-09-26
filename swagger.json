@@ -304,7 +304,7 @@
             "content": {
               "multipart/form-data": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateUserDataResponse"
+                  "$ref": "#/components/schemas/UpdateUserDataRequest"
                 }
               }
             }
@@ -1403,10 +1403,12 @@
               "description": "User's name. It must contain only Latin letters; may contain numbers, signs, letters in different case",
               "example": "Mango"
             },
-            "avatarURL": {
-              "type": "string",
+            "avatarURL": { 
+              "type": "file", 
+              "content": "img/png",
+              "format": "binary",
               "description": "User's avatar",
-              "example": ""
+              "example": "avatar.jpg"
             },
             "height": {
               "type": "number",

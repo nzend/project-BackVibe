@@ -7,6 +7,10 @@ const getAllProducts = async (req, res) => {
  
   const { page = 1, limit = 20, recommended,  category, title } = req.query;
 
+  if (Object.values(req.user.bodyParameters).includes(undefined)) {
+    throw HttpError(203, "The user parameters are not specified, for further work, enter your data correctly.");
+  }
+
   const {blood} = req.user.bodyParameters
   
 
