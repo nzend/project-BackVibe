@@ -40,7 +40,7 @@ app.use("/api/filter", filterRouter);
 app.use("/api/users", authRouter);
 app.use("/api/diary", diaryRouter);
 app.use("/api/categories", categoriesRouter);
-app.use("/api/assets", assetsRouter);
+// app.use("/api/assets", assetsRouter);
 app.use("/api/statistics", statisticsRouter);
 
 // _____________________________________________

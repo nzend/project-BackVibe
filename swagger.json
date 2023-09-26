@@ -11,7 +11,7 @@
     },
     "consumes": ["application/json", "multipart/form-data"],
     "produces": ["application/json"],
-    "servers": [{ "url": "https://power-pulse-rest-api.onrender.com" }, {"url": "http://localhost:3000/api-docs"}],
+    "servers": [{ "url": "https://power-pulse-rest-api.onrender.com/api" }, {"url": "http://localhost:3000/api"}],
     "tags": [
       {
         "name": "Users",
@@ -40,7 +40,7 @@
     ],
   
     "paths": {
-      "/api/users/register": {
+      "/users/register": {
         "post": {
           "tags": ["Users"],
           "summary": "User registration",
@@ -111,12 +111,11 @@
           }
         }
       },
-      "/api/users/login": {
+      "/users/login": {
         "post": {
           "tags": ["Users"],
           "summary": "User login",
           "parameters": [],
-          "security": [{ "Bearer": [] }],
           "requestBody": {
             "description": "Login's object",
             "required": true,
@@ -172,7 +171,7 @@
           }
         }
       },
-      "/api/users/current": {
+      "/users/current": {
         "get": {
           "tags": ["Users"],
           "summary": "Get current user",
@@ -222,7 +221,7 @@
           }
         }
       },
-      "/api/users/create": {
+      "/users/create": {
         "post": {
           "tags": ["Users"],
           "summary": "User data create",
@@ -293,7 +292,7 @@
           }
         }
       },
-      "/api/users/update": {
+      "/users/update": {
         "patch": {
           "tags": ["Users"],
           "summary": "User data create",
@@ -364,7 +363,7 @@
           }
         }
       },
-      "/api/users/logout": {
+      "/users/logout": {
         "post": {
           "tags": ["Users"],
           "summary": "User logout",
@@ -407,15 +406,20 @@
           }
         }
       },
-      "/api/diary": {
+      "/diary": {
         "get": {
           "tags": ["Diary"],
           "summary": "Get Diary list",
           "parameters": [
-            {
+            { 
+              "in": "query",
               "type":"string",
               "name": "date",
+              "description": "The date for what getting information from the diary in format dd-mm-YYYY",
               "example": "19-09-2023",
+              "schema": {
+                "type": "string"
+              },
               "required": true
             }
           ],
@@ -464,7 +468,7 @@
           }
         }          
       },
-      "/api/diary/add-product": {
+      "/diary/add-product": {
         "post": {
           "tags": ["Diary"],
           "summary": "Add product in to user diary",
@@ -535,7 +539,7 @@
           }
         }
       },
-      "/api/diary/add-exercise": {
+      "/diary/add-exercise": {
         "post": {
           "tags": ["Diary"],
           "summary": "Add exercise in to user diary",
@@ -606,7 +610,7 @@
           }
         }
       },
-      "/api/diary/delete-exercise": {
+      "/diary/delete-exercise": {
         "delete": {
           "tags": ["Diary"],
           "summary": "Delete exersise by date and id",
@@ -677,7 +681,7 @@
           }
         }
       },
-      "/api/diary/delete-product": {
+      "/diary/delete-product": {
         "delete": {
           "tags": ["Diary"],
           "summary": "Delete product by date and id",
@@ -748,7 +752,7 @@
           }
         }
       },
-      "/api/products": {
+      "/products": {
         "get": {
           "tags": ["Products"],
           "summary": "Get Products list",
@@ -830,7 +834,7 @@
           }
         }          
       },
-      "/api/exercises": {
+      "/exercises": {
         "get": {
           "tags": ["Exercises"],
           "summary": "Get Exercises list",
@@ -916,7 +920,7 @@
           }
         }          
       },
-      "/api/filter": {
+      "/filter": {
         "get": {
           "tags": ["Filter"],
           "summary": "Get Exercises list",
@@ -975,7 +979,7 @@
           }
         }          
       },
-      "/api/categories": {
+      "/categories": {
         "get": {
           "tags": ["Categories"],
           "summary": "Get categories list",     
@@ -1097,83 +1101,77 @@
               "format": "Bearer Token",
               "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjMzdlMTQ5MzBjMTVhMTg1ZGQyMCIsImlhdCI6MTY5MTY2NTM1MSwiZXhwIjoxNjkxNjY3MTUxfQ.6Vv03mAwPPixXqJkc0DfsYWwEY53EGJKGOUq2HZrQ9o"
             },
-            "user": {
-              "type": "object",
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "example": "Mango"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email",
+              "example": "mango@email.com"
+            },
+           
+            "avatarURL": {
+              "type": "string",
+              "description": "User's avatar",
+              "example": ""
+            },
+            "dailyСalories": {
+              "type": "number",
+              "description": "User's dailyCalories",
+              "example": 2200
+            },
+            "dailyTime": {
+              "type": "number",
+              "description": "User's daily sport time",
+              "example": 110
+            },
+            "bodyParameters": {
+              "type": "object", 
               "properties": {
-                "name": {
-                  "type": "string",
-                  "description": "User's name",
-                  "example": "Mango"
-                },
-                "email": {
-                  "type": "string",
-                  "description": "User's email",
-                  "format": "email",
-                  "example": "mango@email.com"
-                },
-               
-                "avatarURL": {
-                  "type": "string",
-                  "description": "User's avatar",
-                  "example": ""
-                },
-                "dailyСalories": {
+                "height": {
                   "type": "number",
-                  "description": "User's dailyCalories",
-                  "example": 2200
+                  "description": "User's height",
+                  "example": 184
                 },
-                "dailyTime": {
+                "currentWeight": {
                   "type": "number",
-                  "description": "User's daily sport time",
-                  "example": 110
+                  "description": "User's current weight. Can't be more than 400.",
+                  "example": 100
                 },
-                "bodyParameters": {
-                  "type": "object", 
-                  "properties": {
-                    "height": {
-                      "type": "number",
-                      "description": "User's height",
-                      "example": 184
-                    },
-                    "currentWeight": {
-                      "type": "number",
-                      "description": "User's current weight. Can't be more than 400.",
-                      "example": 100
-                    },
-                    "desiredWeight": {
-                      "type": "number",
-                      "description": "User's desired weight. Can't be less than 50% of current weight.",
-                      "example": 80
-                    },
-                    "birthday": {
-                      "type": "string",
-                      "description": "User's birthday. Format dd-mm-YYYY",
-                      "example": "08-09-1999"
-                    },
-                    "blood": {
-                      "type": "number",
-                      "description": "User's blood",
-                      "enum": [1, 2, 3, 4],
-                      "example": 1
-                    },
-                    "sex": {
-                      "type": "string",
-                      "description": "User's sex",
-                      "enum": ["male", "female"],
-                      "example": "male"
-                    },
-                    "levelActivity:": {
-                      "type": "number",
-                      "description": "User's desired level activity. 1 - easy, 5 - hard",
-                      "enum": [1, 2, 3, 4, 5],
-                      "example": "1"
-                    }      
-                  }
-                }
-                
-                        
+                "desiredWeight": {
+                  "type": "number",
+                  "description": "User's desired weight. Can't be less than 50% of current weight.",
+                  "example": 80
+                },
+                "birthday": {
+                  "type": "string",
+                  "description": "User's birthday. Format dd-mm-YYYY",
+                  "example": "08-09-1999"
+                },
+                "blood": {
+                  "type": "number",
+                  "description": "User's blood",
+                  "enum": [1, 2, 3, 4],
+                  "example": 1
+                },
+                "sex": {
+                  "type": "string",
+                  "description": "User's sex",
+                  "enum": ["male", "female"],
+                  "example": "male"
+                },
+                "levelActivity:": {
+                  "type": "number",
+                  "description": "User's desired level activity. 1 - easy, 5 - hard",
+                  "enum": [1, 2, 3, 4, 5],
+                  "example": "1"
+                }      
               }
             }
+          
           }
         },
   
@@ -1186,81 +1184,76 @@
               "format": "Bearer Token",
               "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDRjMzdlMTQ5MzBjMTVhMTg1ZGQyMCIsImlhdCI6MTY5MTY2NTM1MSwiZXhwIjoxNjkxNjY3MTUxfQ.6Vv03mAwPPixXqJkc0DfsYWwEY53EGJKGOUq2HZrQ9o"
             },
-            "user": {
-              "type": "object",
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "example": "Mango"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email",
+              "example": "mango@email.com"
+            },
+           
+            "avatarURL": {
+              "type": "string",
+              "description": "User's avatar",
+              "example": ""
+            },
+            "dailyСalories": {
+              "type": "number",
+              "description": "User's dailyCalories",
+              "example": 2200
+            },
+            "dailyTime": {
+              "type": "number",
+              "description": "User's daily sport time",
+              "example": 110
+            },
+            "bodyParameters": {
+              "type": "object", 
               "properties": {
-                "name": {
-                  "type": "string",
-                  "description": "User's name",
-                  "example": "Mango"
-                },
-                "email": {
-                  "type": "string",
-                  "description": "User's email",
-                  "format": "email",
-                  "example": "mango@email.com"
-                },
-               
-                "avatarURL": {
-                  "type": "string",
-                  "description": "User's avatar",
-                  "example": ""
-                },
-                "dailyСalories": {
+                "height": {
                   "type": "number",
-                  "description": "User's dailyCalories",
-                  "example": 2200
+                  "description": "User's height",
+                  "example": 184
                 },
-                "dailyTime": {
+                "currentWeight": {
                   "type": "number",
-                  "description": "User's daily sport time",
-                  "example": 110
+                  "description": "User's current weight. Can't be more than 400.",
+                  "example": 100
                 },
-                "bodyParameters": {
-                  "type": "object", 
-                  "properties": {
-                    "height": {
-                      "type": "number",
-                      "description": "User's height",
-                      "example": 184
-                    },
-                    "currentWeight": {
-                      "type": "number",
-                      "description": "User's current weight. Can't be more than 400.",
-                      "example": 100
-                    },
-                    "desiredWeight": {
-                      "type": "number",
-                      "description": "User's desired weight. Can't be less than 50% of current weight.",
-                      "example": 80
-                    },
-                    "birthday": {
-                      "type": "string",
-                      "description": "User's birthday. Format dd-mm-YYYY",
-                      "example": "08-09-1999"
-                    },
-                    "blood": {
-                      "type": "number",
-                      "description": "User's blood",
-                      "enum": [1, 2, 3, 4],
-                      "example": 1
-                    },
-                    "sex": {
-                      "type": "string",
-                      "description": "User's sex",
-                      "enum": ["male", "female"],
-                      "example": "male"
-                    },
-                    "levelActivity:": {
-                      "type": "number",
-                      "description": "User's desired level activity. 1 - easy, 5 - hard",
-                      "enum": [1, 2, 3, 4, 5],
-                      "example": "1"
-                    }      
-                  }
-                }          
+                "desiredWeight": {
+                  "type": "number",
+                  "description": "User's desired weight. Can't be less than 50% of current weight.",
+                  "example": 80
+                },
+                "birthday": {
+                  "type": "string",
+                  "description": "User's birthday. Format dd-mm-YYYY",
+                  "example": "08-09-1999"
+                },
+                "blood": {
+                  "type": "number",
+                  "description": "User's blood",
+                  "enum": [1, 2, 3, 4],
+                  "example": 1
+                },
+                "sex": {
+                  "type": "string",
+                  "description": "User's sex",
+                  "enum": ["male", "female"],
+                  "example": "male"
+                },
+                "levelActivity:": {
+                  "type": "number",
+                  "description": "User's desired level activity. 1 - easy, 5 - hard",
+                  "enum": [1, 2, 3, 4, 5],
+                  "example": "1"
+                }      
               }
-            }
+            } 
           }
         },
         "CreateUserDataRequest": {
@@ -1304,11 +1297,11 @@
               "enum": ["male", "female"],
               "example": "male"
             },
-            "levelActivity:": {
+            "levelActivity": {
               "type": "number",
               "description": "User's desired level activity. 1 - easy, 5 - hard",
               "enum": [1, 2, 3, 4, 5],
-              "example": "1"
+              "example": 1
             }
           
           }
@@ -1358,7 +1351,7 @@
               "enum": ["male", "female"],
               "example": "male"
             },
-            "levelActivity:": {
+            "levelActivity": {
               "type": "number",
               "description": "User's desired level activity. 1 - easy, 5 - hard",
               "enum": [1, 2, 3, 4, 5],
@@ -1413,11 +1406,11 @@
               "enum": ["male", "female"],
               "example": "male"
             },
-            "levelActivity:": {
+            "levelActivity": {
               "type": "number",
               "description": "User's desired level activity. 1 - easy, 5 - hard",
               "enum": [1, 2, 3, 4, 5],
-              "example": "1"
+              "example": 1
             }
           
           }
@@ -1467,11 +1460,11 @@
               "enum": ["male", "female"],
               "example": "male"
             },
-            "levelActivity:": {
+            "levelActivity": {
               "type": "number",
               "description": "User's desired level activity. 1 - easy, 5 - hard",
               "enum": [1, 2, 3, 4, 5],
-              "example": "1"
+              "example": 1
             }
           
           }

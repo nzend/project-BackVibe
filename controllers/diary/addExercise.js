@@ -20,7 +20,7 @@ const addExercise = async (req, res) => {
     burnedCalories,
   };
 
-  try {
+
     const result = await Diary.findOneAndUpdate(
       { owner, date },
       { $push: { exercises: newExercise } },
@@ -37,9 +37,7 @@ const addExercise = async (req, res) => {
     } else {
       res.status(200).json(result);
     }
-  } catch (error) {
-    res.status(500);
-  }
+
 };
 
 module.exports = addExercise;

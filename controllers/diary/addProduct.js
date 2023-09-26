@@ -1,6 +1,7 @@
 const { Diary } = require('../../models');
 const { Product } = require('../../models');
 
+
 const addProducts = async (req, res) => {
   const { _id: owner } = req.user;
   const { date, productId, amount, calories } = req.body;
@@ -22,7 +23,7 @@ const addProducts = async (req, res) => {
     recommend: isRecommend(blood),
   };
 
-  try {
+  
     const result = await Diary.findOneAndUpdate(
       { owner, date }, 
       { $push: { products: newProduct }}, 
@@ -35,9 +36,7 @@ const addProducts = async (req, res) => {
     } else {
       res.status(200).json(result);
     }
-  } catch (error) {
-    res.status(500)
-  }
+
 };
 
 module.exports = addProducts;
