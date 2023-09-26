@@ -21,3 +21,4 @@ const productSchema = Joi.object({
 });
 
 module.exports = productSchema;
+
